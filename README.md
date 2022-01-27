@@ -10,14 +10,17 @@ La web es la interfaz de la aplicación del gimnasio llamado BajaGym que permite
     1. Loguear.
     2. Consultar rutinas de ejemplo.
     3. Consultar horarios clases colectivas.
+    4. Darse de alta.
   - Funcionalidades privadas (usuarios registrados):
     1. Consultar rutina personal.
     2. Apuntarse a clase colectiva.
     3. Pedir cambio rutina.
+    4. Crear rutina y modificarla (entrenador).
+    5. Crear clase colectiva y modificarlas (entrenador).
 
 ## Nombre y descripción de cada una de las 4 o 5 entidades principales:
 
-   - Usuario: persona que usa la aplicación.
+   - Usuario: persona que usa la aplicación (cliente o entrenador).
    - Rutina: lista de ejercicios a realizar.
    - Ejercicio: movimiento a realizar.
    - Material: objetos que intervienen en los ejercicios.
@@ -26,9 +29,7 @@ La web es la interfaz de la aplicación del gimnasio llamado BajaGym que permite
 
 ## Descripción de las funcionalidades del servicio interno:
 
-  - Dar de alta usuarios.
-  - Crear rutina (y modificarla).
-  - Crear clase colectiva (y modificarla).
+  - Enviar notificacion a entrenadores por cambio de rutina.
 
 ## Enlace de Trello:
 
