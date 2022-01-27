@@ -29,3 +29,7 @@ La web es la interfaz de la aplicación del gimnasio llamado BajaGym que permite
   - Dar de alta usuarios.
   - Crear rutina (y modificarla).
   - Crear clase colectiva (y modificarla).
+
+## Enlace de Trello:
+
+https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
