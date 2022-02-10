@@ -31,6 +31,7 @@ public class UsuarioController{
 	public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
 		Optional<Usuario> user = repositoryUser.findById(id);
 		if (user.isPresent()) {
+			repositoryUser.deleteById(id);
 			 return ResponseEntity.ok(user.get());
 		} else {
 			 return ResponseEntity.notFound().build();
