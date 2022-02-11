@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bajagym.model.Usuario;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioDAO extends JpaRepository<Usuario, Long>{
 	List<Usuario> findByNombre(String name);
 	Optional<Usuario> findById(Long id);
 	void deleteById(Long id);
+	Usuario save(Usuario user);
  }

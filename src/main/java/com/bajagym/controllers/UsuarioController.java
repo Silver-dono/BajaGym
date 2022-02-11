@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bajagym.model.Usuario;
-import com.bajagym.repositories.UsuarioRepository;
+import com.bajagym.repositories.UsuarioDAO;
+
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController{
 	
 	@Autowired
-	private UsuarioRepository repositoryUser;
+	private UsuarioDAO repositoryUser;
 	
 	@GetMapping("/")
 	public List<Usuario> getUsers() {
@@ -38,7 +39,7 @@ public class UsuarioController{
 		}
 
 	}
-	@PostMapping("/")
+	@PostMapping("/newUser")
 	public void newUser(@RequestBody Usuario newUser) {
 		
 		repositoryUser.save(newUser);	
