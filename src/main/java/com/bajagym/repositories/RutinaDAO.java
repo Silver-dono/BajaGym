@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.bajagym.controllers.RutinaController;
 import com.bajagym.model.Rutina;
 
 public interface RutinaDAO extends JpaRepository<Rutina, Long>{
