@@ -26,7 +26,7 @@ package com.bajagym.controllers;
 			return repositoryRoutine.findAll();
 		}
 
-		@GetMapping("/{id}")
+		@GetMapping("/delete/{id}")
 		public ResponseEntity<Rutina> deleteRoutine(@PathVariable Long id) {
 			Optional<Rutina> routine = repositoryRoutine.findById(id);
 			if (routine.isPresent()) {

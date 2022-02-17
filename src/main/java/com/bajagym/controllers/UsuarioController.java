@@ -28,7 +28,7 @@ public class UsuarioController{
 		return repositoryUser.findAll();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/delete/{id}")
 	public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
 		Optional<Usuario> user = repositoryUser.findById(id);
 		if (user.isPresent()) {

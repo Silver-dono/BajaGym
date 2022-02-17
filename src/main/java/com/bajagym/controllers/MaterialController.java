@@ -23,11 +23,11 @@ public class MaterialController {
 	private MaterialDAO repositoryMaterial;
 
 	@GetMapping("/")
-	public List<Material> getSets() {
+	public List<Material> getMaterials() {
 		return repositoryMaterial.findAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/delete/{id}")
 	public ResponseEntity<Material> deleteMaterial(@PathVariable Long id) {
 		Optional<Material> material = repositoryMaterial.findById(id);
 		if (material.isPresent()) {
@@ -40,7 +40,7 @@ public class MaterialController {
 	}
 
 	@PostMapping("/newMaterial")
-	public void newUser(@RequestBody Material newMaterial) {
+	public void newMaterial(@RequestBody Material newMaterial) {
 		repositoryMaterial.save(newMaterial);
 	}
 

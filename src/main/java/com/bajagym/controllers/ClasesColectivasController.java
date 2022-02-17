@@ -27,8 +27,8 @@ public class ClasesColectivasController {
 		return repositoryGroupLessons.findAll();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ClasesColectivas> deleteExercise(@PathVariable Long id) {
+	@GetMapping("/delete/{id}")
+	public ResponseEntity<ClasesColectivas> deleteGroupLesson(@PathVariable Long id) {
 		Optional<ClasesColectivas> groupLesson = repositoryGroupLessons.findById(id);
 		if (groupLesson.isPresent()) {
 			repositoryGroupLessons.deleteById(id);
@@ -40,7 +40,7 @@ public class ClasesColectivasController {
 	}
 
 	@PostMapping("/newGroupLesson")
-	public void newExercise(@RequestBody ClasesColectivas newGroupLesson) {
+	public void newGroupLesson(@RequestBody ClasesColectivas newGroupLesson) {
 		repositoryGroupLessons.save(newGroupLesson);
 	}
 }

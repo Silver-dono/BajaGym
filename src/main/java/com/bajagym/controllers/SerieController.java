@@ -27,7 +27,7 @@ public class SerieController {
 		return repositorySet.findAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/delete/{id}")
 	public ResponseEntity<Serie> deleteSet(@PathVariable Long id) {
 		Optional<Serie> set = repositorySet.findById(id);
 		if (set.isPresent()) {
@@ -40,7 +40,7 @@ public class SerieController {
 	}
 
 	@PostMapping("/newSet")
-	public void newUser(@RequestBody Serie newSet) {
+	public void newSet(@RequestBody Serie newSet) {
 
 		repositorySet.save(newSet);
 	}

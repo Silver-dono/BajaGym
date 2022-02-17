@@ -27,7 +27,7 @@ public class EjercicioController {
 		return repositoryExercise.findAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/delete/{id}")
 	public ResponseEntity<Ejercicio> deleteExercise(@PathVariable Long id) {
 		Optional<Ejercicio> exercise = repositoryExercise.findById(id);
 		if (exercise.isPresent()) {
