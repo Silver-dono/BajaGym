@@ -12,38 +12,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bajagym.model.Usuario;
-import com.bajagym.repositories.UsuarioDAO;
-
+import com.bajagym.model.Serie;
+import com.bajagym.repositories.SerieDAO;
 
 @RestController
-@RequestMapping("/usuarios")
-public class UsuarioController{
-	
+@RequestMapping("/series")
+public class SerieController {
+
 	@Autowired
-	private UsuarioDAO repositoryUser;
-	
+	private SerieDAO repositorySet;
+
 	@GetMapping("/")
-	public List<Usuario> getUsers() {
-		return repositoryUser.findAll();
+	public List<Serie> getSets() {
+		return repositorySet.findAll();
 	}
-	
+
 	@GetMapping("/delete/{id}")
-	public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
-		Optional<Usuario> user = repositoryUser.findById(id);
-		if (user.isPresent()) {
-			repositoryUser.deleteById(id);
-			 return ResponseEntity.ok(user.get());
+	public ResponseEntity<Serie> deleteSet(@PathVariable Long id) {
+		Optional<Serie> set = repositorySet.findById(id);
+		if (set.isPresent()) {
+			repositorySet.deleteById(id);
+			return ResponseEntity.ok(set.get());
 		} else {
-			 return ResponseEntity.notFound().build();
+			return ResponseEntity.notFound().build();
 		}
 
 	}
-	@PostMapping("/newUser")
-	public void newUser(@RequestBody Usuario newUser) {
-		
-		repositoryUser.save(newUser);	
+
+	@PostMapping("/newSet")
+	public void newSet(@RequestBody Serie newSet) {
+
+		repositorySet.save(newSet);
 	}
-	
-	
 }
