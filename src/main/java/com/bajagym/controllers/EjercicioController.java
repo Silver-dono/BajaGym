@@ -20,18 +20,18 @@ import com.bajagym.repositories.EjercicioDAO;
 public class EjercicioController {
 
 	@Autowired
-	private EjercicioDAO repositoryExercise;
+	private EjercicioDAO ejercicioDAO;
 
 	@GetMapping("/")
 	public List<Ejercicio> getExercises() {
-		return repositoryExercise.findAll();
+		return ejercicioDAO.findAll();
 	}
 
 	@GetMapping("/delete/{id}")
 	public ResponseEntity<Ejercicio> deleteExercise(@PathVariable Long id) {
-		Optional<Ejercicio> exercise = repositoryExercise.findById(id);
+		Optional<Ejercicio> exercise = ejercicioDAO.findById(id);
 		if (exercise.isPresent()) {
-			repositoryExercise.deleteById(id);
+			ejercicioDAO.deleteById(id);
 			return ResponseEntity.ok(exercise.get());
 		} else {
 			return ResponseEntity.notFound().build();
@@ -41,7 +41,7 @@ public class EjercicioController {
 
 	@PostMapping("/newExercise")
 	public void newExercise(@RequestBody Ejercicio newExercise) {
-		repositoryExercise.save(newExercise);
+		ejercicioDAO.save(newExercise);
 	}
 
 }

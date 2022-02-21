@@ -21,18 +21,18 @@ import com.bajagym.repositories.UsuarioDAO;
 public class UsuarioController{
 	
 	@Autowired
-	private UsuarioDAO repositoryUser;
+	private UsuarioDAO usuarioDAO;
 	
 	@GetMapping("/")
 	public List<Usuario> getUsers() {
-		return repositoryUser.findAll();
+		return usuarioDAO.findAll();
 	}
 	
 	@GetMapping("/delete/{id}")
 	public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
-		Optional<Usuario> user = repositoryUser.findById(id);
+		Optional<Usuario> user = usuarioDAO.findById(id);
 		if (user.isPresent()) {
-			repositoryUser.deleteById(id);
+			usuarioDAO.deleteById(id);
 			 return ResponseEntity.ok(user.get());
 		} else {
 			 return ResponseEntity.notFound().build();
@@ -41,8 +41,8 @@ public class UsuarioController{
 	}
 	@PostMapping("/newUser")
 	public void newUser(@RequestBody Usuario newUser) {
-		
-		repositoryUser.save(newUser);	
+
+		usuarioDAO.save(newUser);
 	}
 	
 	
