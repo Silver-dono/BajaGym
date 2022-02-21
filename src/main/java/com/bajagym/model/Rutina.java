@@ -21,8 +21,11 @@ public class Rutina {
     @Column(name = "id_externo", unique = true, nullable = false)
     private Long idExterno;
 
+    @Column(name = "ejemplo")
+    private boolean ejemplo;
+
     @Fetch(FetchMode.SELECT)
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "rutina", targetEntity = Serie.class)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Serie.class)
     private List<Serie> series;
 
     public Long getIdRutina() {
@@ -51,6 +54,14 @@ public class Rutina {
 
     public List<Serie> getSeries() {
         return series;
+    }
+
+    public boolean getEjemplo(){
+        return ejemplo;
+    }
+
+    public void setEjemplo(boolean ejemplo) {
+        this.ejemplo = ejemplo;
     }
 
     public void setSeries(List<Serie> series) {

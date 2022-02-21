@@ -20,18 +20,18 @@ import com.bajagym.repositories.ClasesColectivasDAO;
 public class ClasesColectivasController {
 
 	@Autowired
-	private ClasesColectivasDAO repositoryGroupLessons;
+	private ClasesColectivasDAO clasesColectivasDAO;
 
 	@GetMapping("/")
 	public List<ClasesColectivas> getGroupLessons() {
-		return repositoryGroupLessons.findAll();
+		return clasesColectivasDAO.findAll();
 	}
 
 	@GetMapping("/delete/{id}")
 	public ResponseEntity<ClasesColectivas> deleteGroupLesson(@PathVariable Long id) {
-		Optional<ClasesColectivas> groupLesson = repositoryGroupLessons.findById(id);
+		Optional<ClasesColectivas> groupLesson = clasesColectivasDAO.findById(id);
 		if (groupLesson.isPresent()) {
-			repositoryGroupLessons.deleteById(id);
+			clasesColectivasDAO.deleteById(id);
 			return ResponseEntity.ok(groupLesson.get());
 		} else {
 			return ResponseEntity.notFound().build();
@@ -41,6 +41,6 @@ public class ClasesColectivasController {
 
 	@PostMapping("/newGroupLesson")
 	public void newGroupLesson(@RequestBody ClasesColectivas newGroupLesson) {
-		repositoryGroupLessons.save(newGroupLesson);
+		clasesColectivasDAO.save(newGroupLesson);
 	}
 }
