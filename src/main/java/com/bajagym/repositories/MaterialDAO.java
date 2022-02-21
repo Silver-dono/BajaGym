@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MaterialDAO extends JpaRepository<Material, Long>{
 	Optional<Material> findByNombre(String name);
 	List<Material> findAll();
-	Optional<Material> findById(Long id);
-	void deleteById(Long id);
+	Optional<Material> findByIdMaterial(Long id);
+	void deleteByIdMaterial(Long id);
 	Material save(Material material);
 	
 }

@@ -1,8 +1,10 @@
 package com.bajagym.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,16 @@ public class ClasesColectivasController {
 			return ResponseEntity.notFound().build();
 		}
 
+	}
+
+	@GetMapping("/{fecha}")
+	public List<ClasesColectivas> getGroupLessonsByDate(@PathVariable Date fecha){
+		List<ClasesColectivas> clases = clasesColectivasDAO.findAllByFecha(fecha);
+		if(CollectionUtils.isNotEmpty(clases)){
+			return clases;
+		} else {
+			return null;
+		}
 	}
 
 	@PostMapping("/newGroupLesson")

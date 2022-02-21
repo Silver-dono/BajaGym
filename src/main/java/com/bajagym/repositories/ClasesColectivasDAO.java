@@ -10,7 +10,7 @@ import com.bajagym.model.ClasesColectivas;
 public interface ClasesColectivasDAO extends JpaRepository<ClasesColectivas, Long>{
 
 	List<ClasesColectivas> findAll();
-	Optional<ClasesColectivas> findByFecha(Date fecha);
+	List<ClasesColectivas> findAllByFecha(Date fecha);
 	Optional<ClasesColectivas> findByIdClasesColectivas(Long id);
 	void deleteByIdClasesColectivas(Long id);
 	ClasesColectivas save(ClasesColectivas e);
