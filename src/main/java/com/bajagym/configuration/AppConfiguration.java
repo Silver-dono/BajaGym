@@ -36,12 +36,12 @@ public class AppConfiguration {
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/bajagym");
-        dataSource.setUsername( "bajagymadmin" );
-        dataSource.setPassword( "4dm1nch4v3z" );
+        dataSource.setUsername("bajagymadmin");
+        dataSource.setPassword("4dm1nch4v3z");
         return dataSource;
     }
 
