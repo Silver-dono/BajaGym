@@ -20,18 +20,18 @@ import com.bajagym.repositories.MaterialDAO;
 public class MaterialController {
 
 	@Autowired
-	private MaterialDAO repositoryMaterial;
+	private MaterialDAO materialDAO;
 
 	@GetMapping("/")
 	public List<Material> getMaterials() {
-		return repositoryMaterial.findAll();
+		return materialDAO.findAll();
 	}
 
 	@GetMapping("/delete/{id}")
 	public ResponseEntity<Material> deleteMaterial(@PathVariable Long id) {
-		Optional<Material> material = repositoryMaterial.findById(id);
+		Optional<Material> material = materialDAO.findById(id);
 		if (material.isPresent()) {
-			repositoryMaterial.deleteById(id);
+			materialDAO.deleteById(id);
 			return ResponseEntity.ok(material.get());
 		} else {
 			return ResponseEntity.notFound().build();
@@ -41,7 +41,7 @@ public class MaterialController {
 
 	@PostMapping("/newMaterial")
 	public void newMaterial(@RequestBody Material newMaterial) {
-		repositoryMaterial.save(newMaterial);
+		materialDAO.save(newMaterial);
 	}
 
 }

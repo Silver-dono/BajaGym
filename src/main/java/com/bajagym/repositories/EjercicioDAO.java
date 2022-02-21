@@ -10,7 +10,7 @@ public interface EjercicioDAO extends JpaRepository<Ejercicio, Long>{
 
 	Optional<Ejercicio> findByNombre(String name);
 	List<Ejercicio> findAll();
-	Optional<Ejercicio> findById(Long id);
-	void deleteById(Long id);
+	Optional<Ejercicio> findByIdEjercicio(Long id);
+	void deleteByIdEjercicio(Long id);
 	Ejercicio save(Ejercicio e);
 }

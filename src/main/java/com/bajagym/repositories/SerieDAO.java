@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bajagym.model.Serie;
 public interface SerieDAO extends JpaRepository<Serie, Long>{
-	Optional<Serie> findById(Long id);
+	Optional<Serie> findByIdSerie(Long id);
 	List<Serie> findAll();
-	void deleteById(Long id);
+	void deleteByIdSerie(Long id);
 	Serie save(Serie set);
 }

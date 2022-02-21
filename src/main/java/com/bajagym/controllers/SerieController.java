@@ -20,18 +20,18 @@ import com.bajagym.repositories.SerieDAO;
 public class SerieController {
 
 	@Autowired
-	private SerieDAO repositorySet;
+	private SerieDAO serieDAO;
 
 	@GetMapping("/")
 	public List<Serie> getSets() {
-		return repositorySet.findAll();
+		return serieDAO.findAll();
 	}
 
 	@GetMapping("/delete/{id}")
 	public ResponseEntity<Serie> deleteSet(@PathVariable Long id) {
-		Optional<Serie> set = repositorySet.findById(id);
+		Optional<Serie> set = serieDAO.findById(id);
 		if (set.isPresent()) {
-			repositorySet.deleteById(id);
+			serieDAO.deleteById(id);
 			return ResponseEntity.ok(set.get());
 		} else {
 			return ResponseEntity.notFound().build();
@@ -42,6 +42,6 @@ public class SerieController {
 	@PostMapping("/newSet")
 	public void newSet(@RequestBody Serie newSet) {
 
-		repositorySet.save(newSet);
+		serieDAO.save(newSet);
 	}
 }
