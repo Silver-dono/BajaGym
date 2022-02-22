@@ -30,7 +30,8 @@ public class AppConfiguration {
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.bajagym.model");
 
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setShowSql(true);
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());
 
