@@ -1,13 +1,12 @@
 package com.bajagym.controllers;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,14 +24,17 @@ public class ClasesColectivasController {
     private ClasesColectivasDAO clasesColectivasDAO;
 
     @GetMapping("/")
-    public List<ClasesColectivas> getGroupLessons() {
-        return clasesColectivasDAO.findAll();
-    }
-
-    @GetMapping("/prueba")
-    public String probate() {
+    public String getGroupLessons(Model model) {
+        List<ClasesColectivas> lista = clasesColectivasDAO.findAll();
+        List<String> colectivas = new ArrayList<>();
+        for(ClasesColectivas clase : lista) {
+            colectivas.add(clase.toString());
+        }
+        model.addAttribute("user",false);
+        model.addAttribute("colectiva",colectivas);
         return "clases_colectivas";
     }
+
 
     @GetMapping("/delete/{id}")
     public ResponseEntity<ClasesColectivas> deleteGroupLesson(@PathVariable Long id) {

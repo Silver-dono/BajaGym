@@ -29,6 +29,10 @@ public class Usuario {
     private Rutina rutina;
 
 
+    public Usuario(String name, int edad){
+        this.nombre=name;
+        this.edad = edad;
+    }
     public Long getIdUsuario() {
         return idUsuario;
     }

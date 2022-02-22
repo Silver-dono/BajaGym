@@ -24,10 +24,10 @@ public class Rutina {
     @Column(name = "ejemplo")
     private boolean ejemplo;
 
-    @Fetch(FetchMode.SELECT)
+  /*  @Fetch(FetchMode.SELECT)
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Serie.class)
     private List<Serie> series;
-
+*/
     public Long getIdRutina() {
         return idRutina;
     }
@@ -52,10 +52,10 @@ public class Rutina {
         this.idExterno = idExterno;
     }
 
-    public List<Serie> getSeries() {
+ /*   public List<Serie> getSeries() {
         return series;
     }
-
+*/
     public boolean getEjemplo(){
         return ejemplo;
     }
@@ -63,8 +63,8 @@ public class Rutina {
     public void setEjemplo(boolean ejemplo) {
         this.ejemplo = ejemplo;
     }
-
+/*
     public void setSeries(List<Serie> series) {
         this.series = series;
-    }
+    }*/
 }

@@ -6,11 +6,15 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @Table(name = "clases_colectivas")
 public class ClasesColectivas {
+
+
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -58,5 +62,12 @@ public class ClasesColectivas {
 
     public void setRutina(Rutina rutina) {
         this.rutina = rutina;
+    }
+
+
+    @Override
+    public String toString(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return "nombre: "+getNombreClase()+", Fecha:"+format.format(getFecha());
     }
 }
