@@ -40,33 +40,43 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
 ![img.png](src/main/resources/static/img/img.png)
 
 ## Diagrama Entidad/relación
-![img.png](src/main/resources/static/img/img_9.png)
+
+![img_9.png](src/main/resources/static/img/img_9.png)
 
 ## Diagrama de navegación web
-![img.png](src/main/resources/static/img/img_5.png)
+
+![img_5.png](src/main/resources/static/img/img_5.png)
 
 ## Navegación web
 
 -Login.
+
 ![img_1.png](src/main/resources/static/img/img_1.png)
 
 -Página principal
+
 ![img_2.png](src/main/resources/static/img/img_2.png)
 
 -Crear clases colectivas
+
 ![img_3.png](src/main/resources/static/img/img_3.png)
 
 -Creada clase colectiva
-![img.png](src/main/resources/static/img/img5.png)
+
+![img5.png](src/main/resources/static/img/img5.png)
 
 -Crear rutinas
-![img_1.png](src/main/resources/static/img/img_6.png)
+
+![img_6.png](src/main/resources/static/img/img_6.png)
 
 -Creada rutina
-![img_2.png](src/main/resources/static/img/img_7.png)
+
+![img_7.png](src/main/resources/static/img/img_7.png)
 
 -Lista de clases colectivas
-![img_3.png](src/main/resources/static/img/img_8.png)
+
+![img_8.png](src/main/resources/static/img/img_8.png)
 
 -Lista de rutinas ejemplo
+
 ![img_4.png](src/main/resources/static/img/img_4.png)
