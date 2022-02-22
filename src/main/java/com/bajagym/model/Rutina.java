@@ -29,6 +29,8 @@ public class Rutina {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "idRutina", targetEntity = Serie.class)
     private List<Serie> series;
 
+
+
     public Long getIdRutina() {
         return idRutina;
     }

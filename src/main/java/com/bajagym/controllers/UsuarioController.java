@@ -66,6 +66,19 @@ public class UsuarioController {
         return "registered_succesfull";
     }
 
+   /* @RequestMapping("/newRutina")
+    public String newRutina(Model model, @RequestParam String userName,@RequestParam boolean value){
+        model.addAttribute("name",userName);
+        rutinaDAO.save(new Rutina(userName,value));
+        return "rutina_creada";
+    }
+    @RequestMapping("/newClaseColectiva")
+    public String registered(Model model, @RequestParam String userName,@RequestParam String date){
+        model.addAttribute("name",userName);
+        /*claseColectivaDAO.save(new Usuario(userName,edad));
+        return "claseColectiva_creada";
+    }
+*/
     @RequestMapping ("/ClasesColectivas/{name}")
     public String getGroupLessons(Model model,@PathVariable String name) {
         List<ClasesColectivas> lista = clasesColectivasDAO.findAll();
