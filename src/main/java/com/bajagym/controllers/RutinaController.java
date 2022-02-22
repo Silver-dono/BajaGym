@@ -1,5 +1,6 @@
 package com.bajagym.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.bajagym.model.Rutina;
@@ -27,7 +29,13 @@ public class RutinaController {
     }
 
     @GetMapping("/ejemplos")
-    public String ejemplo() {
+    public String ejemplo(Model model) {
+        List<Rutina> lista = rutinaDAO.getAllByEjemplo(true);
+        List<String> rutinas = new ArrayList<>();
+        for(Rutina rut: lista){
+            rutinas.add(rut.toString());
+        }
+        model.addAttribute("rutina",rutinas);
         return "rutina_ejemplo";
     }
 

@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "ejercicio")
@@ -45,5 +46,11 @@ public class Ejercicio {
 
     public void setMaterial(Material material) {
         this.material = material;
+    }
+
+    @Override
+    public String toString(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return "Nombre: "+getNombre()+", Material:"+getMaterial();
     }
 }

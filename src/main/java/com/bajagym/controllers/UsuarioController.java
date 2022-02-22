@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import com.bajagym.model.Usuario;
 import com.bajagym.repositories.UsuarioDAO;
 
-import javax.websocket.server.PathParam;
 
 @RequestMapping("/usuarios")
 @Controller
@@ -46,6 +45,14 @@ public class UsuarioController {
         return "usuario_logeado";
     }
 
+    @RequestMapping ("/loging/{name}")
+    public String vuelta(Model model,@PathVariable String name) {
+        model.addAttribute("name",name);
+
+        return "usuario_logeado";
+    }
+
+
 
     @RequestMapping("/registered")
     public String registered(Model model, @RequestParam String userName,@RequestParam int edad){
@@ -54,14 +61,14 @@ public class UsuarioController {
         return "registered_succesfull";
     }
 
-    @GetMapping("/ClasesColectivas/{UserName}")
-    public String getGroupLessons(Model model,@PathVariable String UserName) {
+    @RequestMapping ("/ClasesColectivas/{name}")
+    public String getGroupLessons(Model model,@PathVariable String name) {
         List<ClasesColectivas> lista = clasesColectivasDAO.findAll();
         List<String> colectivas = new ArrayList<>();
         for(ClasesColectivas clase : lista) {
             colectivas.add(clase.toString());
         }
-        model.addAttribute("UserName",UserName);
+        model.addAttribute("name",name);
         model.addAttribute("colectiva",colectivas);
         model.addAttribute("user",true);
         return "clases_colectivas";

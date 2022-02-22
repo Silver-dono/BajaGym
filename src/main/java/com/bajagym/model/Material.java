@@ -1,6 +1,7 @@
 package com.bajagym.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "material")
@@ -39,5 +40,11 @@ public class Material {
 
     public void setPeso(int peso) {
         this.peso = peso;
+    }
+
+    @Override
+    public String toString(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return "Nombre: "+getNombre()+", peso:"+getPeso();
     }
 }
