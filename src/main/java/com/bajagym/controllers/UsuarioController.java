@@ -1,6 +1,9 @@
 package com.bajagym.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +11,7 @@ import com.bajagym.model.ClasesColectivas;
 import com.bajagym.model.Rutina;
 import com.bajagym.repositories.ClasesColectivasDAO;
 import com.bajagym.repositories.RutinaDAO;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -66,19 +70,24 @@ public class UsuarioController {
         return "registered_succesfull";
     }
 
-   /* @RequestMapping("/newRutina")
-    public String newRutina(Model model, @RequestParam String userName,@RequestParam boolean value){
+    @RequestMapping("/crearRutina/newRutina")
+    public String newRutina(Model model, @RequestParam String userName,@RequestParam boolean ejemplo){
         model.addAttribute("name",userName);
-        rutinaDAO.save(new Rutina(userName,value));
+        rutinaDAO.save(new Rutina(userName,ejemplo, rutinaDAO.countAll()+1));
         return "rutina_creada";
     }
-    @RequestMapping("/newClaseColectiva")
-    public String registered(Model model, @RequestParam String userName,@RequestParam String date){
+    @RequestMapping("/crearClaseColectiva/newClaseColectiva")
+    public String registered(Model model, @RequestParam String userName,@RequestParam String date, @RequestParam long id_rutina){
         model.addAttribute("name",userName);
-        /*claseColectivaDAO.save(new Usuario(userName,edad));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            clasesColectivasDAO.save(new ClasesColectivas(userName, format.parse(date), rutinaDAO.findById(id_rutina).get()));
+        } catch (ParseException ex){
+            System.out.println(ex);
+        }
         return "claseColectiva_creada";
     }
-*/
+
     @RequestMapping ("/ClasesColectivas/{name}")
     public String getGroupLessons(Model model,@PathVariable String name) {
         List<ClasesColectivas> lista = clasesColectivasDAO.findAll();
@@ -94,13 +103,9 @@ public class UsuarioController {
 
     @RequestMapping ("/rutinas/{name}")
     public String getRutinaPersonales(Model model,@PathVariable String name) {
-        List<Rutina> lista = rutinaDAO.findByNombre(name);
-        List<String> rutinas = new ArrayList<>();
-        for(Rutina clase : lista) {
-            rutinas.add(clase.toString());
-        }
+        Rutina rutina = usuarioDAO.getRutinaUsuario(name);
         model.addAttribute("name",name);
-        model.addAttribute("rutina",rutinas);
+        model.addAttribute("rutina",rutina.toString());
         model.addAttribute("user",true);
         return "rutinas_logeado";
     }
@@ -114,6 +119,7 @@ public class UsuarioController {
     @RequestMapping("/crearClaseColectiva/{name}")
     public String setNewClaseColectiva(Model model, @PathVariable String name){
         model.addAttribute("name",name);
+        model.addAttribute("rutinas", rutinaDAO.findAll());
         return "crear_clasesColectivas";
     }
 

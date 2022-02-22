@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface RutinaDAO extends JpaRepository<Rutina, Long> {
 
+    @Query(value = "SELECT COUNT(rutina) FROM Rutina rutina")
+    long countAll();
+
     List<Rutina> findAll();
 
     List<Rutina> findByNombre(String nombre);

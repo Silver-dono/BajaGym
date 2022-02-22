@@ -32,6 +32,16 @@ public class ClasesColectivas {
     @JoinColumn(name = "rutina_id", referencedColumnName = "id", nullable = false)
     private Rutina rutina;
 
+    public ClasesColectivas(){
+
+    }
+
+    public ClasesColectivas(String nombreClase, Date fecha, Rutina rutina){
+        this.nombreClase = nombreClase;
+        this.fecha = fecha;
+        this.rutina = rutina;
+    }
+
     public Long getIdClasesColectivas() {
         return idClasesColectivas;
     }

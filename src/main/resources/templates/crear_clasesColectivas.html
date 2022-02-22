@@ -23,9 +23,10 @@
         <p>Fecha:</p>
         <input type='date' name='date' required/>
         <p>Rutina:</p>
-        <select name='rutina' id="rutina_select">
-            <option value="">--Please choose an option--</option>
-            <option value="1">--1--</option>
+        <select name='id_rutina' id="id_rutina">
+            {{#rutinas}}
+            <option value="{{idRutina}}">{{nombre}}</option>
+            {{/rutinas}}
         </select>
         <p><input style="margin-top: 2em;" type='submit' value='Crear nueva clase colectiva'/></p>
 
