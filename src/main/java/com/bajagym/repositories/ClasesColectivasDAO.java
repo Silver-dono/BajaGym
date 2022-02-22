@@ -7,11 +7,15 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.bajagym.model.ClasesColectivas;
 
-public interface ClasesColectivasDAO extends JpaRepository<ClasesColectivas, Long>{
+public interface ClasesColectivasDAO extends JpaRepository<ClasesColectivas, Long> {
 
-	List<ClasesColectivas> findAll();
-	List<ClasesColectivas> findAllByFecha(Date fecha);
-	Optional<ClasesColectivas> findByIdClasesColectivas(Long id);
-	void deleteByIdClasesColectivas(Long id);
-	ClasesColectivas save(ClasesColectivas e);
+    List<ClasesColectivas> findAll();
+
+    List<ClasesColectivas> findAllByFecha(Date fecha);
+
+    Optional<ClasesColectivas> findByIdClasesColectivas(Long id);
+
+    void deleteByIdClasesColectivas(Long id);
+
+    ClasesColectivas save(ClasesColectivas e);
 }

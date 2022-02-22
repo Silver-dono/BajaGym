@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Entity
@@ -25,8 +26,16 @@ public class Rutina {
     private boolean ejemplo;
 
     @Fetch(FetchMode.SELECT)
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Serie.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rutina_id", targetEntity = Serie.class)
     private List<Serie> series;
+
+    public Rutina(){}
+
+    public Rutina(String nombre, boolean ejemplo, long idExterno){
+        this.nombre = nombre;
+        this.ejemplo = ejemplo;
+        this.idExterno = idExterno;
+    }
 
     public Long getIdRutina() {
         return idRutina;
@@ -67,4 +76,9 @@ public class Rutina {
     public void setSeries(List<Serie> series) {
         this.series = series;
     }
+@Override
+public String toString(){
+
+    return "Nombre: "+getNombre()+", Series" + getSeries().toString();
+}
 }

@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "serie")
@@ -14,7 +15,7 @@ public class Serie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSerie;
 
-    @Column(name = "reps", nullable = false)
+    @Column(name = "repeticiones", nullable = false)
     private int repeticiones;
 
     @Column(name = "descanso", nullable = false)
@@ -22,7 +23,7 @@ public class Serie {
 
     @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "rutina_id", referencedColumnName = "id_externo", nullable = false)
-    private Long idRutina;
+    private Long rutina_id;
 
     @Fetch(FetchMode.JOIN)
     @OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Ejercicio.class)
@@ -55,11 +56,11 @@ public class Serie {
     }
 
     public Long getIdRutina() {
-        return idRutina;
+        return rutina_id;
     }
 
     public void setIdRutina(Long idRutina) {
-        this.idRutina = idRutina;
+        this.rutina_id = idRutina;
     }
 
     public Ejercicio getEjercicio() {
@@ -68,5 +69,10 @@ public class Serie {
 
     public void setEjercicio(Ejercicio ejercicio) {
         this.ejercicio = ejercicio;
+    }
+
+    @Override
+    public String toString(){
+        return "Repeticiones: "+getRepeticiones()+", Descanso:"+getDescanso();
     }
 }

@@ -4,6 +4,7 @@ package com.bajagym.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -19,6 +20,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"com.bajagym"})
 @EnableJpaRepositories(basePackages = {"com.bajagym.repositories"})
+@PropertySource(value = "classpath:application.properties")
 public class AppConfiguration {
 
     @Bean
@@ -28,7 +30,8 @@ public class AppConfiguration {
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.bajagym.model");
 
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setShowSql(true);
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());
 
@@ -36,12 +39,12 @@ public class AppConfiguration {
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/bajagym");
-        dataSource.setUsername( "bajagymadmin" );
-        dataSource.setPassword( "4dm1nch4v3z" );
+        dataSource.setUsername("bajagymadmin");
+        dataSource.setPassword("4dm1nch4v3z");
         return dataSource;
     }
 

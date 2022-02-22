@@ -3,16 +3,21 @@ package com.bajagym.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @Table(name = "clases_colectivas")
 public class ClasesColectivas {
 
+
+
     @Id
-    @Column(name="id", unique = true, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idClasesColectivas;
 
@@ -26,6 +31,16 @@ public class ClasesColectivas {
     @ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Rutina.class)
     @JoinColumn(name = "rutina_id", referencedColumnName = "id", nullable = false)
     private Rutina rutina;
+
+    public ClasesColectivas(){
+
+    }
+
+    public ClasesColectivas(String nombreClase, Date fecha, Rutina rutina){
+        this.nombreClase = nombreClase;
+        this.fecha = fecha;
+        this.rutina = rutina;
+    }
 
     public Long getIdClasesColectivas() {
         return idClasesColectivas;
@@ -57,5 +72,12 @@ public class ClasesColectivas {
 
     public void setRutina(Rutina rutina) {
         this.rutina = rutina;
+    }
+
+
+    @Override
+    public String toString(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return "nombre: "+getNombreClase()+", Fecha:"+format.format(getFecha());
     }
 }

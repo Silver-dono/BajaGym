@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<body>
+
+<div style="text-align: center;">
+    <h1> BajaGym </h1>
+</div>
+
+<div style="text-align: center; margin-bottom: 4em; margin-top: 5em;">
+    <h2>
+        Puede ver nuestra rutina de ejemplo aqui
+    </h2>
+
+    <p>Rutinas:</p>
+    <p>
+        {{#rutina}}
+    <li>{{.}}</li>
+        {{/rutina}}
+    </p>
+    <form style="text-align: center; margin-bottom: 2em; margin-top: 3em;"action="/">
+        <button class="button user_button">
+            Volver
+        </button>
+    </form>
+
+</div>
+</body>
+</html>
