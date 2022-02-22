@@ -34,3 +34,39 @@ La web es la interfaz de la aplicación del gimnasio llamado BajaGym que permite
 ## Enlace de Trello:
 
 https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
+
+## Diagrama de clases UML
+
+![img.png](src/main/resources/static/img/img.png)
+
+## Diagrama Entidad/relación
+![img.png](src/main/resources/static/img/img_9.png)
+
+## Diagrama de navegación web
+![img.png](src/main/resources/static/img/img_5.png)
+
+## Navegación web
+
+-Login.
+![img_1.png](src/main/resources/static/img/img_1.png)
+
+-Página principal
+![img_2.png](src/main/resources/static/img/img_2.png)
+
+-Crear clases colectivas
+![img_3.png](src/main/resources/static/img/img_3.png)
+
+-Creada clase colectiva
+![img.png](src/main/resources/static/img/img5.png)
+
+-Crear rutinas
+![img_1.png](src/main/resources/static/img/img_6.png)
+
+-Creada rutina
+![img_2.png](src/main/resources/static/img/img_7.png)
+
+-Lista de clases colectivas
+![img_3.png](src/main/resources/static/img/img_8.png)
+
+-Lista de rutinas ejemplo
+![img_4.png](src/main/resources/static/img/img_4.png)

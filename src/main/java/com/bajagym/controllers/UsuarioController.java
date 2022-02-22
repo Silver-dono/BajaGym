@@ -71,8 +71,9 @@ public class UsuarioController {
     }
 
     @RequestMapping("/crearRutina/newRutina")
-    public String newRutina(Model model, @RequestParam String userName,@RequestParam boolean ejemplo){
+    public String newRutina(Model model, @RequestParam String userName,@RequestParam(required=false) boolean ejemplo){
         model.addAttribute("name",userName);
+
         rutinaDAO.save(new Rutina(userName,ejemplo, rutinaDAO.countAll()+1));
         return "rutina_creada";
     }
@@ -105,7 +106,9 @@ public class UsuarioController {
     public String getRutinaPersonales(Model model,@PathVariable String name) {
         Rutina rutina = usuarioDAO.getRutinaUsuario(name);
         model.addAttribute("name",name);
-        model.addAttribute("rutina",rutina.toString());
+        if(rutina != null){
+            model.addAttribute("rutina",rutina.toString());
+        }
         model.addAttribute("user",true);
         return "rutinas_logeado";
     }
