@@ -14,9 +14,9 @@
 
 <div style="text-align: center;" >
 
-    <form style=display:inline-block; action="rutinas/ejemplos">
+    <form style=display:inline-block; action="rutinas/{{name}}">
         <button class="button user_button">
-            Sus rutinas
+            Rutinas personales
         </button>
     </form>
     <form style=display:inline-block; action="ClasesColectivas/{{name}}">
@@ -24,12 +24,12 @@
             Clases colectivas
         </button>
     </form>
-    <form style=display:inline-block; action="crearClaseColectiva">
+    <form style=display:inline-block; action="crearClaseColectiva/{{name}}">
         <button class="button user_button">
             Crear clases colectivas
         </button>
     </form>
-    <form style=display:inline-block; action="crearRutina">
+    <form style=display:inline-block; action="crearRutina/{{name}}">
         <button class="button user_button">
             Crear rutinas
         </button>

@@ -6,7 +6,7 @@
     <h1> BajaGym </h1>
 </div>
 
-<div style="text-align: center; margin-bottom: 4em; margin-top: 5em;">
+<div style="text-align: center; margin-bottom: 3em; margin-top: 5em;">
     <h2>
         {{#user}}  {{name}} este es nuestro horario de clases colectivas:{{/user}}
         {{^user}} Aqui puede ver nuestro horario de clases colectivas: {{/user}}
@@ -22,15 +22,14 @@
 
 <div>
     {{#user}}
-    <form style="text-align: center; margin-bottom: 4em; margin-top: 5em;" action="/usuarios/loging/{{name}}">
-        <button class="button user_button">
-            Volver
-        </button>
+    <form style="text-align: center; margin-bottom: 2em; margin-top: 3em;" action="/">
+        <button class="button main_button"> Volver a inicio </button>
+
     </form>
     {{/user}}
 
     {{^user}}
-    <form style="text-align: center; margin-bottom: 4em; margin-top: 5em;"action="/">
+    <form style="text-align: center; margin-bottom: 2em; margin-top: 3em;"action="/">
         <button class="button user_button">
             Volver
         </button>

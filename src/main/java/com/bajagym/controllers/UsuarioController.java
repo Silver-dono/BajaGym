@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import com.bajagym.model.ClasesColectivas;
+import com.bajagym.model.Rutina;
 import com.bajagym.repositories.ClasesColectivasDAO;
+import com.bajagym.repositories.RutinaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class UsuarioController {
 
     @Autowired
     private ClasesColectivasDAO clasesColectivasDAO;
+
+    @Autowired
+    private RutinaDAO rutinaDAO;
 
 
     @GetMapping("/login")
@@ -72,6 +77,31 @@ public class UsuarioController {
         model.addAttribute("colectiva",colectivas);
         model.addAttribute("user",true);
         return "clases_colectivas";
+    }
+
+    @RequestMapping ("/rutinas/{name}")
+    public String getRutinaPersonales(Model model,@PathVariable String name) {
+        List<Rutina> lista = rutinaDAO.findByNombre(name);
+        List<String> rutinas = new ArrayList<>();
+        for(Rutina clase : lista) {
+            rutinas.add(clase.toString());
+        }
+        model.addAttribute("name",name);
+        model.addAttribute("rutina",rutinas);
+        model.addAttribute("user",true);
+        return "rutinas_logeado";
+    }
+
+    @RequestMapping("/crearRutina/{name}")
+    public String setNewRutina(Model model, @PathVariable String name){
+        model.addAttribute("name",name);
+        return "crear_rutinas";
+    }
+
+    @RequestMapping("/crearClaseColectiva/{name}")
+    public String setNewClaseColectiva(Model model, @PathVariable String name){
+        model.addAttribute("name",name);
+        return "crear_clasesColectivas";
     }
 
     @GetMapping("/usuarios")

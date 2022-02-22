@@ -12,6 +12,8 @@ public interface RutinaDAO extends JpaRepository<Rutina, Long> {
 
     List<Rutina> findAll();
 
+    List<Rutina> findByNombre(String nombre);
+
     List<Rutina> getAllByEjemplo(boolean ejemplo);
 
     Rutina save(Rutina r);
