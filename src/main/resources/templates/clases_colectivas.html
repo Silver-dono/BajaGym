@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
-<html lang="es">
+<html lang="es" xmlns="http://www.w3.org/1999/html">
+<head>
+<link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
 <body>
 
 <div style="text-align: center;">
@@ -12,14 +15,26 @@
         {{^user}} Aqui puede ver nuestro horario de clases colectivas: {{/user}}
     </h2>
     <p>horario:</p>
-    <p>
+    <div class="flex-container" style="display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;">
+    <div class="colectiva">
         {{#colectiva}}
-        <li>{{.}}</li>
+        <li>{{.}}
+    <p></p>
+        </li>
         {{/colectiva}}
-    </p>
-
+    </div>
+    <div class="lista">{{#lista}}
+        <p> <form style=display:inline-block; action="{{nombreClase}}/delete/">
+            <input type='submit' value='Borrar'></input>
+        </form>
+        </p>
+        {{/lista}}
+    </div>
+    </div>
 </div>
-
 <div>
     {{#user}}
     <form style="text-align: center; margin-bottom: 2em; margin-top: 3em;" action="/">

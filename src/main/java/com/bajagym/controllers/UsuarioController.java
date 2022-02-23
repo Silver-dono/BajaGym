@@ -88,20 +88,27 @@ public class UsuarioController {
         }
         return "claseColectiva_creada";
     }
+    @RequestMapping("/ClasesColectivas/{nameClase}/delete/")
+    public String deleteGroupLesson(Model model, @PathVariable String nameClase){
+        model.addAttribute("nameClase", nameClase);
+        clasesColectivasDAO.deleteByNombreClase(nameClase);
+        return "claseColectiva_borrada";
+    }
 
     @RequestMapping ("/ClasesColectivas/{name}")
     public String getGroupLessons(Model model,@PathVariable String name) {
         List<ClasesColectivas> lista = clasesColectivasDAO.findAll();
         List<String> colectivas = new ArrayList<>();
+
         for(ClasesColectivas clase : lista) {
             colectivas.add(clase.toString());
         }
+        model.addAttribute("lista", lista);
         model.addAttribute("name",name);
         model.addAttribute("colectiva",colectivas);
         model.addAttribute("user",true);
         return "clases_colectivas";
     }
-
     @RequestMapping ("/rutinas/{name}")
     public String getRutinaPersonales(Model model,@PathVariable String name) {
         Rutina rutina = usuarioDAO.getRutinaUsuario(name);
