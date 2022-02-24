@@ -88,10 +88,12 @@ public class UsuarioController {
         }
         return "claseColectiva_creada";
     }
-    @RequestMapping("/ClasesColectivas/{nameClase}/delete/")
-    public String deleteGroupLesson(Model model, @PathVariable String nameClase){
-        model.addAttribute("nameClase", nameClase);
-        clasesColectivasDAO.deleteByNombreClase(nameClase);
+    @RequestMapping("/ClasesColectivas/{idClase}/delete/")
+    public String deleteGroupLesson(Model model, @PathVariable Long idClase){
+        Optional<ClasesColectivas> claseOp= clasesColectivasDAO.findById(idClase);
+        model.addAttribute("nameClase", claseOp.get().getNombreClase());
+        model.addAttribute("idClase", idClase);
+        clasesColectivasDAO.deleteById(idClase);
         return "claseColectiva_borrada";
     }
 
@@ -125,22 +127,14 @@ public class UsuarioController {
         if(rutina != null){
             model.addAttribute("rutina",rutina.toString());
         }
-        else{
-            model.addAttribute("rutina","no hay rutinas personales");
-        }
         model.addAttribute("user",true);
         return "rutinas_logeado";
     }
     @RequestMapping("/cambiarRutina/{name}")
     public String changeRutinaPersonal(Model model, @PathVariable String name){
         List<Rutina> rutinas= rutinaDAO.findAll();
-        List<Long> idRutinas=new ArrayList();
-        for(Rutina r: rutinas){
-            idRutinas.add(r.getIdRutina());
-        }
         model.addAttribute("name",name);
         model.addAttribute("rutinas", rutinas);
-        model.addAttribute("idListaRutinas", idRutinas);
 
         return "cambiar_rutinas";
     }

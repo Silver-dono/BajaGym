@@ -19,14 +19,11 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT usuario.rutina FROM Usuario usuario WHERE usuario.nombre like :name")
     Rutina getRutinaUsuario(@Param("name") String name);
 
-    @Query(value = "SELECT usuario.rutina FROM Usuario usuario WHERE usuario.nombre like :name")
-    void deleteRutinaUsuario(@Param("name") String name);
-
     void deleteByIdUsuario(Long id);
 
     Usuario save(Usuario user);
 
     /*@Modifying
     @Query("UPDATE Usuario u set u.rutina_id = :(rutina_id) where u.nombre = :(name)")
-    void setUserRutinaByNombre(@Param("rutina_id") Long rutina, @Param("name") String name);*/
+    void setUserRutinaByNombre(@Param("rutina_id") long rutina, @Param("name") String name);*/
 }
