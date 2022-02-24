@@ -22,6 +22,7 @@ public class Serie {
     private int descanso;
 
     @Fetch(FetchMode.JOIN)
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Rutina.class)
     @JoinColumn(name = "rutina_id", referencedColumnName = "id_externo", nullable = false)
     private Long rutina_id;
 

@@ -145,9 +145,10 @@ public class UsuarioController {
         return "cambiar_rutinas";
     }
     @RequestMapping("/cambiarRutina/cambiadoRutina/{name}")
-    public String changedRutinaPersonal(@PathVariable String name, @RequestParam Long id_rutina){
+    public String changedRutinaPersonal(Model model, @PathVariable String name, @RequestParam Long id_rutina){
         Usuario user = usuarioDAO.findByNombre(name);
         Optional<Rutina> rutina= rutinaDAO.findById(id_rutina);
+        model.addAttribute("rutina", rutina);
         user.setRutina(rutina.get());
         return "rutinas_logeado";
     }
