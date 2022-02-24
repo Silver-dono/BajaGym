@@ -109,6 +109,15 @@ public class UsuarioController {
         model.addAttribute("user",true);
         return "clases_colectivas";
     }
+    @RequestMapping("/rutinas/{name}/deleteRutina")
+    public String deleteRutinaPersonal(Model model, @PathVariable String name){
+        Usuario user = usuarioDAO.findByNombre(name);
+        model.addAttribute("name",name);
+        user.setRutina(null);
+
+        return "rutinas_logeado";
+
+    }
     @RequestMapping ("/rutinas/{name}")
     public String getRutinaPersonales(Model model,@PathVariable String name) {
         Rutina rutina = usuarioDAO.getRutinaUsuario(name);
@@ -116,7 +125,30 @@ public class UsuarioController {
         if(rutina != null){
             model.addAttribute("rutina",rutina.toString());
         }
+        else{
+            model.addAttribute("rutina","no hay rutinas personales");
+        }
         model.addAttribute("user",true);
+        return "rutinas_logeado";
+    }
+    @RequestMapping("/cambiarRutina/{name}")
+    public String changeRutinaPersonal(Model model, @PathVariable String name){
+        List<Rutina> rutinas= rutinaDAO.findAll();
+        List<Long> idRutinas=new ArrayList();
+        for(Rutina r: rutinas){
+            idRutinas.add(r.getIdRutina());
+        }
+        model.addAttribute("name",name);
+        model.addAttribute("rutinas", rutinas);
+        model.addAttribute("idListaRutinas", idRutinas);
+
+        return "cambiar_rutinas";
+    }
+    @RequestMapping("/cambiarRutina/cambiadoRutina/{name}")
+    public String changedRutinaPersonal(@PathVariable String name, @RequestParam Long id_rutina){
+        Usuario user = usuarioDAO.findByNombre(name);
+        Optional<Rutina> rutina= rutinaDAO.findById(id_rutina);
+        user.setRutina(rutina.get());
         return "rutinas_logeado";
     }
 
