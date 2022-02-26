@@ -4,12 +4,13 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Entity
 @Table(name = "rutina")
-public class Rutina {
+public class Rutina implements Serializable {
 
     @Id
     @Column(name = "id", unique = true, nullable = false)

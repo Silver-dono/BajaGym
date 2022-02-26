@@ -116,6 +116,7 @@ public class UsuarioController {
         Usuario user = usuarioDAO.findByNombre(name);
         model.addAttribute("name",name);
         user.setRutina(null);
+        usuarioDAO.setUsuarioRutinaByNombre(null, name);
 
         return "rutinas_logeado";
 
@@ -124,8 +125,8 @@ public class UsuarioController {
     public String getRutinaPersonales(Model model,@PathVariable String name) {
         Rutina rutina = usuarioDAO.getRutinaUsuario(name);
         model.addAttribute("name",name);
-        if(rutina != null){
-            model.addAttribute("rutina",rutina.toString());
+        if(rutina != null) {
+            model.addAttribute("rutina", rutina.toString());
         }
         model.addAttribute("user",true);
         return "rutinas_logeado";
@@ -141,9 +142,11 @@ public class UsuarioController {
     @RequestMapping("/cambiarRutina/cambiadoRutina/{name}")
     public String changedRutinaPersonal(Model model, @PathVariable String name, @RequestParam Long id_rutina){
         Usuario user = usuarioDAO.findByNombre(name);
-        Optional<Rutina> rutina= rutinaDAO.findById(id_rutina);
+        Optional<Rutina> rutinaOp= rutinaDAO.findById(id_rutina);
+        Rutina rutina=rutinaOp.get();
         model.addAttribute("rutina", rutina);
-        user.setRutina(rutina.get());
+        user.setRutina(rutina);
+        usuarioDAO.setUsuarioRutinaByNombre(rutina, name);
         return "rutinas_logeado";
     }
 
