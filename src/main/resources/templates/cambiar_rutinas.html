@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cambiar rutina </title>
+</head>
+<body>
+<div style="text-align: center">
+<h1>
+    Seleccione la nueva rutina {{name}}
+</h1>
+<form action="cambiadoRutina/{{name}}">
+
+    <select name="id_rutina">
+        {{#rutinas}}
+        <option value="{{idRutina}}">{{.}}</option>
+        {{/rutinas}}
+    </select>
+
+
+    <p><input style="margin-top: 2em;" type='submit' value='Cambiar'/></p>
+
+</form>
+</div>
+</body>
+</html>
