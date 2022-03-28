@@ -15,6 +15,7 @@ import com.bajagym.repositories.RutinaDAO;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +65,7 @@ public class UsuarioController {
     public String login(HttpSession session, HttpServletRequest request,Model model) {
         String name = request.getUserPrincipal().getName();
         Usuario user = usuarioDAO.findByNombre(name);
-        model.addAttribute("name",user);
+        model.addAttribute("name",user.getNombre());
 
         return "usuario_logeado";
     }
@@ -81,7 +82,7 @@ public class UsuarioController {
     @RequestMapping("/registered")
     public String registered(Model model, @RequestParam String userName,@RequestParam int edad,@RequestParam String contrasenia){
         model.addAttribute("name",userName);
-        usuarioDAO.save(new Usuario(userName,edad,contrasenia));
+        usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia)));
         return "registered_succesfull";
     }
 

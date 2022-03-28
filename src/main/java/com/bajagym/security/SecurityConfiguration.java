@@ -1,5 +1,6 @@
 package com.bajagym.security;
 
+import com.bajagym.security.UserRepositoryAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserRepositoryAuthenticationProvider authenticationProvider;
+    public UserRepositoryAuthenticationProvider userRepositoryAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -25,18 +26,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
         //Paginas privadas
-        http.authorizeRequests().antMatchers("usuarios/crearRutina/newRutina").hasAnyRole("ENTRENADOR");
-        http.authorizeRequests().antMatchers("usuarios/crearClaseColectiva/newClaseColectiva").hasAnyRole("ENTRENADOR");
-        http.authorizeRequests().antMatchers("usuarios/cambiarRutina/{name}").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/crearClaseColectiva/newClaseColectiva").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/cambiarRutina/{name}").hasAnyRole("ENTRENADOR");
 
         http.authorizeRequests().anyRequest().authenticated();
 
         //Formulario login
-        http.formLogin().loginPage("/usuarios/login");
-        http.formLogin().usernameParameter("userName");
-        http.formLogin().passwordParameter("contrasenia");
-        http.formLogin().defaultSuccessUrl("/usuarios/loging");
-        http.formLogin().failureUrl("/usuarios/fallo");
+        http.formLogin().loginPage("/usuarios/login")
+                .usernameParameter("userName")
+                .passwordParameter("contrasenia")
+                .defaultSuccessUrl("/usuarios/loging")
+                .failureUrl("/usuarios/fallo");
 
         //Desconectar
         http.logout().logoutUrl("usuarios/desconectar");
@@ -49,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // Database authentication provider
-        auth.authenticationProvider(authenticationProvider);
+        auth.authenticationProvider(userRepositoryAuthenticationProvider);
     }
 
 }
