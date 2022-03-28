@@ -1,5 +1,6 @@
 package com.bajagym.controllers;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import com.bajagym.model.Usuario;
 import com.bajagym.repositories.UsuarioDAO;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 @RequestMapping("/usuarios")
 @Controller
@@ -37,6 +41,11 @@ public class UsuarioController {
     private RutinaDAO rutinaDAO;
 
 
+    @GetMapping("/fallo")
+    public String falloregistro() {
+        return "usuario_logeado_incorrectamente";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -48,8 +57,9 @@ public class UsuarioController {
     }
 
     @RequestMapping ("/loging")
-    public String login(Model model,@RequestParam String userName) {
-        model.addAttribute("name",userName);
+    public String login(HttpSession session, HttpServletRequest request) {
+        Principal user = request.getUserPrincipal();
+        session.setAttribute("user",usuarioDAO.findByNombre(user.getName()));
 
         return "usuario_logeado";
     }
@@ -64,9 +74,9 @@ public class UsuarioController {
 
 
     @RequestMapping("/registered")
-    public String registered(Model model, @RequestParam String userName,@RequestParam int edad){
+    public String registered(Model model, @RequestParam String userName,@RequestParam int edad,@RequestParam String contrasenia){
         model.addAttribute("name",userName);
-        usuarioDAO.save(new Usuario(userName,edad));
+        usuarioDAO.save(new Usuario(userName,edad,contrasenia));
         return "registered_succesfull";
     }
 
