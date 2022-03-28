@@ -18,7 +18,7 @@ import java.util.List;
 
 
 
-@Service
+@Service("UserRepositoryAuthenticationProvider")
 public class UserRepositoryAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
