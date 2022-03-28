@@ -1,4 +1,4 @@
-package com.bajagym.configuration;
+package com.bajagym.security;
 
 import com.bajagym.model.Usuario;
 import com.bajagym.repositories.UsuarioDAO;
@@ -11,12 +11,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+
+
+@Service
 public class UserRepositoryAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired

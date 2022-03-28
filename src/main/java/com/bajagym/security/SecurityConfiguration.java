@@ -1,10 +1,7 @@
-package com.bajagym.configuration;
+package com.bajagym.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,14 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
     @Autowired
-    public UserRepositoryAuthenticationProvider authenticationProvider;
+    private UserRepositoryAuthenticationProvider authenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -34,11 +25,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
         //Paginas privadas
-        http.authorizeRequests().anyRequest().authenticated();
-
         http.authorizeRequests().antMatchers("usuarios/crearRutina/newRutina").hasAnyRole("ENTRENADOR");
         http.authorizeRequests().antMatchers("usuarios/crearClaseColectiva/newClaseColectiva").hasAnyRole("ENTRENADOR");
         http.authorizeRequests().antMatchers("usuarios/cambiarRutina/{name}").hasAnyRole("ENTRENADOR");
+
+        http.authorizeRequests().anyRequest().authenticated();
 
         //Formulario login
         http.formLogin().loginPage("/usuarios/login");
@@ -47,10 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.formLogin().defaultSuccessUrl("/usuarios/loging");
         http.formLogin().failureUrl("/usuarios/fallo");
 
-
         //Desconectar
-        http.logout().logoutUrl("/logout");
+        http.logout().logoutUrl("usuarios/desconectar");
         http.logout().logoutSuccessUrl("/");
+
         //Deshabilitar CSRF
         http.csrf().disable();
     }

@@ -40,6 +40,10 @@ public class UsuarioController {
     @Autowired
     private RutinaDAO rutinaDAO;
 
+    @GetMapping("/desconectar")
+    public String desconectar() {
+        return "usuario_deslogeado";
+    }
 
     @GetMapping("/fallo")
     public String falloregistro() {
@@ -57,9 +61,10 @@ public class UsuarioController {
     }
 
     @RequestMapping ("/loging")
-    public String login(HttpSession session, HttpServletRequest request) {
-        Principal user = request.getUserPrincipal();
-        session.setAttribute("user",usuarioDAO.findByNombre(user.getName()));
+    public String login(HttpSession session, HttpServletRequest request,Model model) {
+        String name = request.getUserPrincipal().getName();
+        Usuario user = usuarioDAO.findByNombre(name);
+        model.addAttribute("name",user);
 
         return "usuario_logeado";
     }
