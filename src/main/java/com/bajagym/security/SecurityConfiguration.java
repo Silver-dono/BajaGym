@@ -27,15 +27,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
         //Paginas privadas
-        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
-        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
-        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
-        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
-        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
-        http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_ENTRENADOR");
-        http.authorizeRequests().antMatchers("/usuarios/crearClaseColectiva/newClaseColectiva").hasAnyRole("ROL_ENTRENADOR");
-        http.authorizeRequests().antMatchers("/usuarios/cambiarRutina/{name}").hasAnyRole("ROL_ENTRENADOR");
 
+        http.authorizeRequests().anyRequest().authenticated();
 
         //Formulario login
         http.formLogin().loginPage("/usuarios/login")
