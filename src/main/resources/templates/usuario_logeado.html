@@ -24,6 +24,8 @@
             Clases colectivas
         </button>
     </form>
+
+    {{#entrenador}}
     <form style=display:inline-block; action="crearClaseColectiva/{{name}}">
         <button class="button user_button">
             Crear clases colectivas
@@ -38,12 +40,12 @@
     <button class="button user_button">
         Cambiar rutina
     </button>
-
     </form>
+    {{/entrenador}}
 </div>
 
 <div>
-    <form style="text-align: center; margin-bottom: 4em; margin-top: 5em;" action="/">
+    <form style="text-align: center; margin-bottom: 4em; margin-top: 5em;" action="/usuarios/desconectar">
         <button class="button main_button"> Desconectar </button>
 
     </form>

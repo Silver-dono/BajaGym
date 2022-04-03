@@ -23,14 +23,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/rutinas/ejemplos").permitAll();
         http.authorizeRequests().antMatchers("/ClasesColectivas/").permitAll();
         http.authorizeRequests().antMatchers("/usuarios/fallo").permitAll();
+        http.authorizeRequests().antMatchers("/usuarios/desconectar").permitAll();
 
 
         //Paginas privadas
-        http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ENTRENADOR");
-        http.authorizeRequests().antMatchers("/usuarios/crearClaseColectiva/newClaseColectiva").hasAnyRole("ENTRENADOR");
-        http.authorizeRequests().antMatchers("/usuarios/cambiarRutina/{name}").hasAnyRole("ENTRENADOR");
+        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
+        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
+        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
+        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
+        //http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_USUARIO");
+        http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ROL_ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/crearClaseColectiva/newClaseColectiva").hasAnyRole("ROL_ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/cambiarRutina/{name}").hasAnyRole("ROL_ENTRENADOR");
 
-        http.authorizeRequests().anyRequest().authenticated();
 
         //Formulario login
         http.formLogin().loginPage("/usuarios/login")
@@ -40,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .failureUrl("/usuarios/fallo");
 
         //Desconectar
-        http.logout().logoutUrl("usuarios/desconectar");
+        http.logout().logoutUrl("/usuarios/desconectar");
         http.logout().logoutSuccessUrl("/");
 
         //Deshabilitar CSRF

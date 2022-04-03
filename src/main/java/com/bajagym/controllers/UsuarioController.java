@@ -66,23 +66,21 @@ public class UsuarioController {
         String name = request.getUserPrincipal().getName();
         Usuario user = usuarioDAO.findByNombre(name);
         model.addAttribute("name",user.getNombre());
-
+        model.addAttribute("entrenador",request.isUserInRole("ROLE_ENTRENADOR"));
         return "usuario_logeado";
     }
-
-    @RequestMapping ("/loging/{name}")
-    public String vuelta(Model model,@PathVariable String name) {
-        model.addAttribute("name",name);
-
-        return "usuario_logeado";
-    }
-
-
 
     @RequestMapping("/registered")
-    public String registered(Model model, @RequestParam String userName,@RequestParam int edad,@RequestParam String contrasenia){
+    public String registered(Model model, @RequestParam String userName,@RequestParam int edad,@RequestParam String contrasenia,@RequestParam(value="rol_entrenador",required = false)String checkboxvalue){
         model.addAttribute("name",userName);
-        usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia)));
+        List<String> roles = new ArrayList<>();
+        if(checkboxvalue !=null){
+            roles.add("ROLE_USUARIO");
+            roles.add("ROLE_ENTRENADOR");
+        }else{
+            roles.add("ROLE_USUARIO");
+        }
+        usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia),roles));
         return "registered_succesfull";
     }
 

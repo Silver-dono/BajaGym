@@ -40,11 +40,14 @@ public class Usuario {
 
     public Usuario(){}
 
-    public Usuario(String name, int edad,String passwordHash){
+    public Usuario(String name, int edad,String passwordHash,List<String> roles){
         this.nombre=name;
         this.edad = edad;
         this.passwordHash = passwordHash;
+        this.roles = roles;
+
     }
+
     public Long getIdUsuario() {
         return idUsuario;
     }
