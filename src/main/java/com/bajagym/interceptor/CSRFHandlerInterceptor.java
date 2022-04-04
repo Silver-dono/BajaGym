@@ -13,7 +13,7 @@ public class CSRFHandlerInterceptor implements HandlerInterceptor {
                            HttpServletResponse response,Object handler,
                            ModelAndView modelAndView) throws Exception {
         String token = (String) request.getAttribute("_csrf");
-        if (null==token) {
+        if (token==null) {
             token= UUID.randomUUID().toString();
             request.getSession().setAttribute("_csrf", token);
         }
