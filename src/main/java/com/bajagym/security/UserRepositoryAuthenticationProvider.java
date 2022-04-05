@@ -1,4 +1,4 @@
-package com.bajagym.configuration;
+package com.bajagym.security;
 
 import com.bajagym.model.Usuario;
 import com.bajagym.repositories.UsuarioDAO;
