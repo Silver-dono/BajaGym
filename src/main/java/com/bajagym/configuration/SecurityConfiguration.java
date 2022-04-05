@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/rutinas/ejemplos").permitAll();
         http.authorizeRequests().antMatchers("/ClasesColectivas/").permitAll();
         http.authorizeRequests().antMatchers("/usuarios/fallo").permitAll();
-        http.authorizeRequests().antMatchers("/usuarios/desconectar").permitAll();
+        http.authorizeRequests().antMatchers("/logout").permitAll();
 
 
         //Paginas privadas
@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .failureUrl("/usuarios/fallo");
 
         //Desconectar
-        http.logout().logoutUrl("/usuarios/desconectar");
+        http.logout().logoutUrl("/logout");
         http.logout().logoutSuccessUrl("/");
 
         //Deshabilitar CSRF

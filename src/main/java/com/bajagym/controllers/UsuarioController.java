@@ -41,11 +41,6 @@ public class UsuarioController {
     @Autowired
     private RutinaDAO rutinaDAO;
 
-    @GetMapping("/desconectar")
-    public String desconectar() {
-        return "usuario_deslogeado";
-    }
-
     @GetMapping("/fallo")
     public String falloregistro() {
         return "usuario_logeado_incorrectamente";
