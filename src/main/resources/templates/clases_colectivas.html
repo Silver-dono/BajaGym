@@ -27,7 +27,7 @@
         {{/colectiva}}
     </div>
     <div class="lista">{{#lista}}
-        <p> <form style=display:inline-block; action="{{idClasesColectivas}}/delete/">
+        <p> <form method="post" style=display:inline-block; action="{{idClasesColectivas}}/delete/">
             <input type="hidden" name="_csrf" value="{{token}}"/>
             <input type='submit' value='Borrar'></input>
         </form>
