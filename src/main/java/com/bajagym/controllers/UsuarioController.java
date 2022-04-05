@@ -12,9 +12,10 @@ import com.bajagym.model.ClasesColectivas;
 import com.bajagym.model.Rutina;
 import com.bajagym.repositories.ClasesColectivasDAO;
 import com.bajagym.repositories.RutinaDAO;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,9 @@ public class UsuarioController {
     @Autowired
     private RutinaDAO rutinaDAO;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     @GetMapping("/fallo")
     public String falloregistro() {
         return "usuario_logeado_incorrectamente";
@@ -66,16 +70,16 @@ public class UsuarioController {
     }
 
     @RequestMapping("/registered")
-    public String registered(Model model, @RequestParam String userName,@RequestParam int edad,@RequestParam String contrasenia,@RequestParam(value="rol_entrenador",required = false)String checkboxvalue){
+    public String registered(Model model, @RequestParam String userName,@RequestParam String correo ,@RequestParam int edad,@RequestParam String contrasenia,@RequestParam(value="rol_entrenador",required = false)boolean checkboxvalue){
         model.addAttribute("name",userName);
         List<String> roles = new ArrayList<>();
-        if(checkboxvalue !=null){
+        if(checkboxvalue){
             roles.add("ROLE_USUARIO");
             roles.add("ROLE_ENTRENADOR");
         }else{
             roles.add("ROLE_USUARIO");
         }
-        usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia),roles));
+        usuarioDAO.save(new Usuario(userName,correo,edad,new BCryptPasswordEncoder().encode(contrasenia),roles, checkboxvalue));
         return "registered_succesfull";
     }
 
@@ -132,10 +136,11 @@ public class UsuarioController {
     }
     @RequestMapping ("/rutinas/{name}")
     public String getRutinaPersonales(Model model,@PathVariable String name) {
-        Rutina rutina = usuarioDAO.getRutinaUsuario(name);
+        Usuario usuario = usuarioDAO.findByNombre(name);
         model.addAttribute("name",name);
-        if(rutina != null) {
-            model.addAttribute("rutina", rutina.toString());
+        if(usuario != null) {
+            model.addAttribute("rutina", usuario.getRutina().toString());
+            model.addAttribute("correo",usuario.getCorreo());
         }
         model.addAttribute("user",true);
         return "rutinas_logeado";
@@ -143,20 +148,26 @@ public class UsuarioController {
     @RequestMapping("/cambiarRutina/{name}")
     public String changeRutinaPersonal(Model model, @PathVariable String name){
         List<Rutina> rutinas= rutinaDAO.findAll();
+        List<Usuario> usuarios = usuarioDAO.findAllByIsUsuario();
         model.addAttribute("name",name);
+        model.addAttribute("usuarios", usuarios);
         model.addAttribute("rutinas", rutinas);
 
         return "cambiar_rutinas";
     }
-    @RequestMapping("/cambiarRutina/cambiadoRutina/{name}")
-    public String changedRutinaPersonal(Model model, @PathVariable String name, @RequestParam Long id_rutina){
-        Usuario user = usuarioDAO.findByNombre(name);
-        Optional<Rutina> rutinaOp= rutinaDAO.findById(id_rutina);
-        Rutina rutina=rutinaOp.get();
-        model.addAttribute("rutina", rutina);
+    @RequestMapping("/cambiarRutina/cambiadoRutina")
+    public String changedRutinaPersonal(Model model, @RequestParam Long id_usuario, @RequestParam Long id_rutina){
+        Usuario user = usuarioDAO.findByIdUsuario(id_usuario).get();
+        Rutina rutina= rutinaDAO.findById(id_rutina).get();
         user.setRutina(rutina);
-        usuarioDAO.setUsuarioRutinaByNombre(rutina, name);
-        return "rutinas_logeado";
+        usuarioDAO.setUsuarioRutinaByNombre(rutina, user.getNombre());
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getCorreo());
+        mailMessage.setSubject("Rutina cambiada");
+        mailMessage.setText("Se ha cambiado tu rutina personal, revisa la aplicacion para verlo");
+        javaMailSender.send(mailMessage);
+        model.addAttribute("name", user.getNombre());
+        return "rutina_cambiada";
     }
 
     @RequestMapping("/crearRutina/{name}")
@@ -170,6 +181,19 @@ public class UsuarioController {
         model.addAttribute("name",name);
         model.addAttribute("rutinas", rutinaDAO.findAll());
         return "crear_clasesColectivas";
+    }
+
+    @RequestMapping("/cambioRutinaSolicitado")
+    public String requestedChangeRutina(Model model, @RequestParam String name){
+        List<Usuario> entrenadores = usuarioDAO.findAllByIsEntrenador();
+        for(Usuario entrenador : entrenadores){
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(entrenador.getCorreo());
+            mailMessage.setSubject("Solicitud cambio rutina: "+ name);
+            mailMessage.setText("El usuario " + name + " ha solicitado un cambio de su rutina personal");
+            javaMailSender.send(mailMessage);
+        }
+        return "cambio_rutina_solicitada";
     }
 
     @GetMapping("/usuarios")

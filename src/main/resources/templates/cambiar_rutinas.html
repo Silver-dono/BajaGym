@@ -9,15 +9,23 @@
 <h1>
     Seleccione la nueva rutina {{name}}
 </h1>
-<form method="post" action="cambiadoRutina/{{name}}">
-
+<form method="post" action="cambiadoRutina">
+    <div>
+    <select name="id_usuario">
+        {{#usuarios}}
+        <option value="{{idUsuario}}">{{.}}</option>
+        {{/usuarios}}
+    </select>
+    </div>
+    <br/>
+    <div>
     <select name="id_rutina">
         {{#rutinas}}
         <option value="{{idRutina}}">{{.}}</option>
         {{/rutinas}}
     </select>
     <input type="hidden" name="_csrf" value="{{token}}"/>
-
+    </div>
     <p><input style="margin-top: 2em;" type='submit' value='Cambiar'/></p>
 
 </form>

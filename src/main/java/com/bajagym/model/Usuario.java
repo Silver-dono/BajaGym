@@ -19,6 +19,9 @@ public class Usuario {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
+    @Column(name = "correo", nullable = false)
+    private String correo;
+
     @Column(name = "contraseña", nullable = false)
     private String passwordHash;
 
@@ -40,12 +43,13 @@ public class Usuario {
 
     public Usuario(){}
 
-    public Usuario(String name, int edad,String passwordHash,List<String> roles){
-        this.nombre=name;
+    public Usuario(String name,String correo, int edad,String passwordHash,List<String> roles, boolean entrenador){
+        this.nombre = name;
+        this.correo = correo;
         this.edad = edad;
         this.passwordHash = passwordHash;
         this.roles = roles;
-
+        this.entrenador = entrenador;
     }
 
     public Long getIdUsuario() {
@@ -62,6 +66,14 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getPasswordHash() {
@@ -98,5 +110,10 @@ public class Usuario {
 
     public void setRutina(Rutina rutina) {
         this.rutina = rutina;
+    }
+
+    @Override
+    public String toString(){
+        return "Nombre: " + this.nombre + ", Correo: " + this.correo + ", Edad: " + this.edad;
     }
 }
