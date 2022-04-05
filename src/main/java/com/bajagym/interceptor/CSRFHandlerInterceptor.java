@@ -1,5 +1,6 @@
 package com.bajagym.interceptor;
 
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,11 +13,13 @@ public class CSRFHandlerInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response,Object handler,
                            ModelAndView modelAndView) throws Exception {
-        String token = (String) request.getAttribute("_csrf");
-        if (token==null) {
-            token= UUID.randomUUID().toString();
-            request.getSession().setAttribute("_csrf", token);
+
+        if(modelAndView!=null){
+            CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+            if (token != null) {
+                modelAndView.addObject("token", token.getToken());
+            }
+
         }
-        modelAndView.addObject("token", token);
     }
 }
