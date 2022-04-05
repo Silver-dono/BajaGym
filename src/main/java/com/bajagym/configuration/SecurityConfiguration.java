@@ -28,7 +28,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         //Paginas privadas
 
-        http.authorizeRequests().anyRequest().authenticated();
+
+        http.authorizeRequests().antMatchers("/usuarios/crearRutina/newRutina").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/crearClaseColectiva/newClaseColectiva").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/ClasesColectivas/{idClase}/delete/ ").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/rutinas/{name}/deleteRutina").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/cambiarRutina/{name}").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/cambiarRutina/cambiadoRutina/{name}").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/crearRutina/{name}").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/usuarios/crearClaseColectiva/{name}").hasAnyRole("ENTRENADOR");
+        http.authorizeRequests().antMatchers("/ClasesColectivas/{name}").hasAnyRole("USUARIO");
+        http.authorizeRequests().antMatchers("/rutinas/{name}").hasAnyRole("USUARIO");
+
 
         //Formulario login
         http.formLogin().loginPage("/usuarios/login")
