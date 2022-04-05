@@ -1,6 +1,6 @@
 package com.bajagym.security;
 
-import com.bajagym.security.UserRepositoryAuthenticationProvider;
+import com.bajagym.configuration.UserRepositoryAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
