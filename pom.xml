@@ -226,6 +226,13 @@
             <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
 
+        <!-- Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+
         <!-- Mustache -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

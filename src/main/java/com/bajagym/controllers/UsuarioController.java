@@ -1,5 +1,6 @@
 package com.bajagym.controllers;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import com.bajagym.repositories.RutinaDAO;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bajagym.model.Usuario;
 import com.bajagym.repositories.UsuarioDAO;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 @RequestMapping("/usuarios")
@@ -36,6 +41,10 @@ public class UsuarioController {
     @Autowired
     private RutinaDAO rutinaDAO;
 
+    @GetMapping("/fallo")
+    public String falloregistro() {
+        return "usuario_logeado_incorrectamente";
+    }
 
     @GetMapping("/login")
     public String login() {
@@ -48,25 +57,25 @@ public class UsuarioController {
     }
 
     @RequestMapping ("/loging")
-    public String login(Model model,@RequestParam String userName) {
-        model.addAttribute("name",userName);
-
+    public String login(HttpSession session, HttpServletRequest request,Model model) {
+        String name = request.getUserPrincipal().getName();
+        Usuario user = usuarioDAO.findByNombre(name);
+        model.addAttribute("name",user.getNombre());
+        model.addAttribute("entrenador",request.isUserInRole("ROLE_ENTRENADOR"));
         return "usuario_logeado";
     }
-
-    @RequestMapping ("/loging/{name}")
-    public String vuelta(Model model,@PathVariable String name) {
-        model.addAttribute("name",name);
-
-        return "usuario_logeado";
-    }
-
-
 
     @RequestMapping("/registered")
-    public String registered(Model model, @RequestParam String userName,@RequestParam int edad){
+    public String registered(Model model, @RequestParam String userName,@RequestParam int edad,@RequestParam String contrasenia,@RequestParam(value="rol_entrenador",required = false)String checkboxvalue){
         model.addAttribute("name",userName);
-        usuarioDAO.save(new Usuario(userName,edad));
+        List<String> roles = new ArrayList<>();
+        if(checkboxvalue !=null){
+            roles.add("ROLE_USUARIO");
+            roles.add("ROLE_ENTRENADOR");
+        }else{
+            roles.add("ROLE_USUARIO");
+        }
+        usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia),roles));
         return "registered_succesfull";
     }
 

@@ -11,13 +11,26 @@
         Registrese aqui:
     </h2>
 
-    <form action="registered">
+    <form method="post" action="registered">
         <p>Nombre:</p>
         <input type='text' name='userName' required/>
         <p>Edad:</p>
         <input type='number' name='edad' required/>
+        <p>Constrasenia:</p>
+        <input type='password' name="contrasenia" required/>
+        <p>Entrenador
+        <input type="checkbox" name="rol_entrenador"/></p>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
         <p><input type='submit' value='Registrar'/></p>
 
+
+
+    </form>
+
+    <form style="text-align: center; margin-bottom: 4em;"action="/">
+        <button class="button user_button">
+            Volver
+        </button>
     </form>
 </div>
 </body>
