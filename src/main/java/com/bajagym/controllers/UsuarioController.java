@@ -143,7 +143,9 @@ public class UsuarioController {
         Usuario usuario = usuarioDAO.findByNombre(name);
         model.addAttribute("name",name);
         if(usuario != null) {
-            model.addAttribute("rutina", usuario.getRutina().toString());
+            if(usuario.getRutina() != null) {
+                model.addAttribute("rutina", usuario.getRutina().toString());
+            }
         }
         model.addAttribute("user",true);
         return "rutinas_logeado";
