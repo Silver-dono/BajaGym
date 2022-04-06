@@ -17,7 +17,7 @@
         Ingrese los datos pedidos:
     </h2>
 
-    <form action="newClaseColectiva">
+    <form method="post" action="newClaseColectiva">
         <p>Nombre:</p>
         <input type='text' name='userName' required/>
         <p>Fecha:</p>
@@ -28,6 +28,7 @@
             <option value="{{idRutina}}">{{nombre}}</option>
             {{/rutinas}}
         </select>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
         <p><input style="margin-top: 2em;" type='submit' value='Crear nueva clase colectiva'/></p>
 
     </form>
@@ -35,7 +36,7 @@
 </div>
 
 <div>
-    <form style="text-align: center; margin-bottom: 4em; margin-top: 3em;" action="/">
+    <form style="text-align: center; margin-bottom: 4em; margin-top: 5em;" action="/usuarios/loging">
         <button class="button main_button"> Volver a inicio </button>
 
     </form>

@@ -11,10 +11,13 @@
         Introduce tu usuario aqui:
     </h2>
 
-    <form action="loging">
+    <form method="post">
         <p>Nombre de usuario:</p>
-        <input type='text' name='userName' required/>
-        <input type='submit' value='Logearse'/>
+        <input type='text' name="userName" required  placeholder="Nombre de usuario"/>
+        <p>Constrasenia:</p>
+        <input type='password' name="contrasenia" required placeholder="Contraseña"/>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
+        <p><input type='submit' value='Logearse'/></p>
     </form>
 </div>
 <div>

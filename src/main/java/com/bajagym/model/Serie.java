@@ -4,6 +4,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 @Entity
@@ -22,8 +23,9 @@ public class Serie {
     private int descanso;
 
     @Fetch(FetchMode.JOIN)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Rutina.class)
     @JoinColumn(name = "rutina_id", referencedColumnName = "id_externo", nullable = false)
-    private Long rutina_id;
+    private Rutina rutina_id;
 
     @Fetch(FetchMode.JOIN)
     @OneToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Ejercicio.class)
@@ -55,12 +57,12 @@ public class Serie {
         this.descanso = descanso;
     }
 
-    public Long getIdRutina() {
+    public Rutina getIdRutina() {
         return rutina_id;
     }
 
-    public void setIdRutina(Long idRutina) {
-        this.rutina_id = idRutina;
+    public void setIdRutina(Rutina idRutina) {
+        rutina_id=idRutina;
     }
 
     public Ejercicio getEjercicio() {
