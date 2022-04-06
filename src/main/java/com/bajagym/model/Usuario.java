@@ -40,12 +40,12 @@ public class Usuario {
 
     public Usuario(){}
 
-    public Usuario(String name, int edad,String passwordHash,List<String> roles){
+    public Usuario(String name, int edad,String passwordHash,List<String> roles, boolean entrenador){
         this.nombre=name;
         this.edad = edad;
         this.passwordHash = passwordHash;
         this.roles = roles;
-
+        this.entrenador = entrenador;
     }
 
     public Long getIdUsuario() {
@@ -98,5 +98,10 @@ public class Usuario {
 
     public void setRutina(Rutina rutina) {
         this.rutina = rutina;
+    }
+
+    @Override
+    public String toString(){
+        return "Nombre: " + this.nombre + ", Edad: " + this.edad;
     }
 }

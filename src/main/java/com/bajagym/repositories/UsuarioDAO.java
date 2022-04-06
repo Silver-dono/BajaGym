@@ -21,6 +21,9 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT usuario.rutina FROM Usuario usuario WHERE usuario.nombre like :name")
     Rutina getRutinaUsuario(@Param("name") String name);
 
+    @Query(value = "FROM Usuario usuario WHERE usuario.entrenador = false")
+    List<Usuario> findAllByIsUsuario();
+
     void deleteByIdUsuario(Long id);
 
     Usuario save(Usuario user);
