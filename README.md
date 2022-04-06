@@ -163,7 +163,8 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
     1. ![jar_pack.png](src/main/resources/static/img/jar_pack.png)
     2. ![jar_dependencias.png](src/main/resources/static/img/jar_dependencias.png)
   Una vez introducidas las dependencias, se actualiza el proyecto Maven y en el proyecto maven clickamos primero sobre clean y luego sobre install.
-       ![maven.png](src/main/resources/static/img/maven.png)
+       
+  ![maven.png](src/main/resources/static/img/maven.png)
   Todo este proceso se repite para el servicio interno y ya tendriamos nuestros .jar.
 - Por útlimo, solo queda ejecutar el comando java -jar "nombreJar.jar" con el jar de la app y del servicio interno y ya estaría la aplicación y el servicio desplegados y listos para peticiones.
 
