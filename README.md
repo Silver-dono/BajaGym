@@ -36,18 +36,18 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
 
 ## Diagrama de clases UML
 
-![img.png](src/main/resources/static/img/img.png)
+![Diagrama_UML.png](src/main/resources/static/img/Diagrama_UML.png)
 
 ## Diagrama Entidad/relación
 
-![img_9.png](src/main/resources/static/img/img_9.png)
+![Diagrama_ER.png](src/main/resources/static/img/Diagrama_ER.png)
 
 ## Diagrama de clases global:
 ![diagrama_clases_global.png](src/main/resources/static/img/diagrama_clases_global.png)
 
 ## Diagrama de navegación web
 
-![img_5.png](src/main/resources/static/img/img_5.png)
+![Diagrama_NW.png](src/main/resources/static/img/Diagrama_NW.png)
 
 ## Navegación web
 -Menu principal
@@ -72,23 +72,23 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
 
 -Crear clases colectivas
 
-![img_3.png](src/main/resources/static/img/img_3.png)
+![Crear_clasescolectivas.png](src/main/resources/static/img/Crear_clasescolectivas.png)
 
 -Creada clase colectiva
 
-![img5.png](src/main/resources/static/img/img5.png)
+![Creada_clasecolectica.png](src/main/resources/static/img/Creada_clasecolectica.png)
 
 -Crear rutinas
 
-![img_6.png](src/main/resources/static/img/img_6.png)
+![Crear_rutina.png](src/main/resources/static/img/Crear_rutina.png)
 
 -Creada rutina
 
-![img_7.png](src/main/resources/static/img/img_7.png)
+![Creada_rutinapng](src/main/resources/static/img/Creada_rutina.png)
 
 -Lista de clases colectivas (Usuario)
 
-![img_8.png](src/main/resources/static/img/img_8.png)
+![Clasescolectivas_usuario.png](src/main/resources/static/img/Clasescolectivas_usuario.png)
 
 -Lista de clases colectivas (Entrenador)
 
@@ -96,11 +96,24 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
 
 -Lista de rutinas ejemplo
 
-![img_4.png](src/main/resources/static/img/img_4.png)
+![Lista_rutinas_ejemplo.png](src/main/resources/static/img/Lista_rutinas_ejemplo.png)
 
 -Rutinas personales
 
 ![Lista_rutinas.png](src/main/resources/static/img/Lista_rutinas.png)
+
+-Cambiar rutinas
+
+![Cambio_rutina.png](src/main/resources/static/img/Cambio_rutina.png)
+
+-Rutina cambiada de un usuario
+
+![Rutina_cambiada.png](src/main/resources/static/img/Rutina_cambiada.png)
+
+-Cambio de rutina solicitado
+
+![Solicitud_rutina.png](src/main/resources/static/img/Solicitud_rutina.png)
+
 ## Instrucciones instalación en VM:
 
 - Descargar algún software de máquinas virtuales.
