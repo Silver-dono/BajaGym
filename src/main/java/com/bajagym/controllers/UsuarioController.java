@@ -1,10 +1,8 @@
 package com.bajagym.controllers;
 
-import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +10,6 @@ import com.bajagym.model.ClasesColectivas;
 import com.bajagym.model.Rutina;
 import com.bajagym.repositories.ClasesColectivasDAO;
 import com.bajagym.repositories.RutinaDAO;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bajagym.model.Usuario;
 import com.bajagym.repositories.UsuarioDAO;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,6 +29,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/usuarios")
 @Controller
 public class UsuarioController {
+
+    private static final String URL_INTERNAL_SERVICE = "http://localhost:8181/internal";
 
     @Autowired
     private UsuarioDAO usuarioDAO;
@@ -66,16 +66,24 @@ public class UsuarioController {
     }
 
     @RequestMapping("/registered")
-    public String registered(Model model, @RequestParam String userName,@RequestParam int edad,@RequestParam String contrasenia,@RequestParam(value="rol_entrenador",required = false)String checkboxvalue){
+    public String registered(Model model, @RequestParam String userName,@RequestParam String correo ,@RequestParam int edad,@RequestParam String contrasenia,@RequestParam(value="rol_entrenador",required = false)boolean checkboxvalue){
         model.addAttribute("name",userName);
         List<String> roles = new ArrayList<>();
-        if(checkboxvalue !=null){
+        if(checkboxvalue){
             roles.add("ROLE_USUARIO");
             roles.add("ROLE_ENTRENADOR");
         }else{
             roles.add("ROLE_USUARIO");
         }
-        usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia),roles));
+        Usuario aux = usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia),roles, checkboxvalue));
+
+        PostUser postUser = new PostUser(aux.getNombre(),correo,aux.isEntrenador());
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.postForObject(URL_INTERNAL_SERVICE + "/service/usuario", postUser, String.class);
+
+
         return "registered_succesfull";
     }
 
@@ -132,31 +140,36 @@ public class UsuarioController {
     }
     @RequestMapping ("/rutinas/{name}")
     public String getRutinaPersonales(Model model,@PathVariable String name) {
-        Rutina rutina = usuarioDAO.getRutinaUsuario(name);
+        Usuario usuario = usuarioDAO.findByNombre(name);
         model.addAttribute("name",name);
-        if(rutina != null) {
-            model.addAttribute("rutina", rutina.toString());
+        if(usuario != null) {
+            model.addAttribute("rutina", usuario.getRutina().toString());
         }
         model.addAttribute("user",true);
         return "rutinas_logeado";
     }
     @RequestMapping("/cambiarRutina/{name}")
     public String changeRutinaPersonal(Model model, @PathVariable String name){
+        List<Usuario> usuarios = usuarioDAO.findAllByIsUsuario();
         List<Rutina> rutinas= rutinaDAO.findAll();
         model.addAttribute("name",name);
+        model.addAttribute("usuarios", usuarios);
         model.addAttribute("rutinas", rutinas);
 
         return "cambiar_rutinas";
     }
-    @RequestMapping("/cambiarRutina/cambiadoRutina/{name}")
-    public String changedRutinaPersonal(Model model, @PathVariable String name, @RequestParam Long id_rutina){
-        Usuario user = usuarioDAO.findByNombre(name);
-        Optional<Rutina> rutinaOp= rutinaDAO.findById(id_rutina);
-        Rutina rutina=rutinaOp.get();
-        model.addAttribute("rutina", rutina);
+    @RequestMapping("/cambiarRutina/cambiadoRutina")
+    public String changedRutinaPersonal(Model model, @RequestParam Long id_usuario, @RequestParam Long id_rutina){
+        Usuario user = usuarioDAO.findById(id_usuario).get();
+        Rutina rutina= rutinaDAO.findById(id_rutina).get();
         user.setRutina(rutina);
-        usuarioDAO.setUsuarioRutinaByNombre(rutina, name);
-        return "rutinas_logeado";
+        usuarioDAO.setUsuarioRutinaByNombre(rutina, user.getNombre());
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.getForObject(URL_INTERNAL_SERVICE + "/service/mail/usuario/"+user.getNombre(),String.class);
+        model.addAttribute("name", user.getNombre());
+        return "rutina_cambiada";
     }
 
     @RequestMapping("/crearRutina/{name}")
@@ -170,6 +183,16 @@ public class UsuarioController {
         model.addAttribute("name",name);
         model.addAttribute("rutinas", rutinaDAO.findAll());
         return "crear_clasesColectivas";
+    }
+
+    @RequestMapping("/cambioRutinaSolicitado")
+    public String requestedChangeRutina(Model model, @RequestParam String name){
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.getForObject(URL_INTERNAL_SERVICE + "/service/mail/entrenadores/"+name,String.class);
+
+        return "cambio_rutina_solicitada";
     }
 
     @GetMapping("/usuarios")
@@ -195,5 +218,44 @@ public class UsuarioController {
         usuarioDAO.save(newUser);
     }
 
+
+    private class PostUser{
+
+        private String nombre;
+        private String correo;
+        private boolean entrenador;
+
+        public PostUser(){}
+
+        public PostUser(String nombre, String correo, boolean entrenador) {
+            this.nombre = nombre;
+            this.correo = correo;
+            this.entrenador = entrenador;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getCorreo() {
+            return correo;
+        }
+
+        public void setCorreo(String correo) {
+            this.correo = correo;
+        }
+
+        public boolean isEntrenador() {
+            return entrenador;
+        }
+
+        public void setEntrenador(boolean entrenador) {
+            this.entrenador = entrenador;
+        }
+    }
 
 }
