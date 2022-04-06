@@ -118,10 +118,14 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
   Configuramos la instalación:
   1. sudo mysql_secure_installation
   2. Primero nos pedirá si queremos validar las contraseñas de los usuarios mediante un nivel de seguridad, le damos a que sí e introducimos el nivel deseado.
+  3. 
 ![mysql_instalacion1.png](src/main/resources/static/img/mysql_instalacion1.png)
+  
   3. Una vez hecho esto nos pedirá que introduzcamos una contraseña para root.
   4. A continuación nos pregunta si queremos establecer usuarios o que continue con un usuario anónimo, le damos a que no para que no nos elimine el anónimo y agilizar la instalación, ya luego introduciremos los usuarios que queramos.
+     
      ![mysql_instalacion2.png](src/main/resources/static/img/mysql_instalacion2.png)
+  
   5. Tras este paso, nos preguntará si queremos desactivar la opción de conectarse remotamente a la BBDD y eliminamos la BDD predeterminada "test".
   6. Continuamos con la instalación predeterminada.
   7. Al terminar la instalación tenemos que hacer que "root" autentique con una contraseña y así ser capaz de usar la base de datos. Para esto, abrimos la shell de MySql y lo configuramos ahí.
