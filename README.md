@@ -138,20 +138,28 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
   mysql>FLUSH PRIVILEGES;
   Y comprobamos que se ha cambiado.
   mysql>SELECT user,authentication_string,plugin,host FROM mysql.user;
-        ![mysql_instalacion4.png](src/main/resources/static/img/mysql_instalacion4.png)
+  
+  ![mysql_instalacion4.png](src/main/resources/static/img/mysql_instalacion4.png)
+  
   9. Una vez hecho esto, ya tendriamos instalado y configurado MySql.
+     
      ![mysql_instalacion5.png](src/main/resources/static/img/mysql_instalacion5.png)
+  
   10. Una vez configurado todo, hay que meter las tablas que se van a usar como base de datos de la aplicación principal y el servicio interno (aunque spring puede que te las cree)
   Se ha creado un script.sql que al ejecutarse se crean las tablas y mete algunos datos para que la base de datos no esté vacia.
   source "path-to-script.sql"
   11. Para que la aplicación de spring se conecte a la base de datos, tendremos que dejarselo indicado en el propio spring.
   En nuestro caso hemos creado una clase nueva de configuración, la cual se inicializa en el main. Debido a que no nos reconocía el usuario de la BDD mediante el pom.xml.
-      ![data_source.png](src/main/resources/static/img/data_source.png)
+  
+  ![data_source.png](src/main/resources/static/img/data_source.png)
+  
   Esta clase irá en la configuración del servicio interno también.
 - Instalar jdk en la VM para poder ejecutar las aplicaciones mediante el jar de cada una de ellas.
   1. Se descarga el openJDK 8 headless (para no obtener un JDK completo)
      sudo apt install openjdk-8-headless
+     
      ![jdk.png](src/main/resources/static/img/jdk.png)
+     
   2. Para poder usar java, tenemos que especificarle al SO el $JAVA_HOME (variable que guarda el path del jre).
   Esta variable se guardará en ~/.bashrc o en /etc/profile. Para guardar estas variables editamos esos archivos y añadimos:
     export JAVA_HOME="/path/to/jre" (suele instalarse en: "/usr/lib/jvm/java-8-openjdk-amd64/jre")
@@ -160,11 +168,15 @@ https://trello.com/b/hHIXMNLi/desarrolo-de-aplicaciones-distribuidas
     Para este apartado se obtendrá lo que se denomina como "fat jar" (jar con todas las dependencias).
     Se puede hacer de dos maneras mediante el IDE (en nuestro caso intelij, pero no recomendamos esta opción ya que nos causó problemas y no conseguimos obtener el .jar con todas las dependencias), o mediante Maven.
     Para hacerlo mediante Maven solamente hay que incluir en el pom.xml:
+    
     1. ![jar_pack.png](src/main/resources/static/img/jar_pack.png)
+    
     2. ![jar_dependencias.png](src/main/resources/static/img/jar_dependencias.png)
+  
   Una vez introducidas las dependencias, se actualiza el proyecto Maven y en el proyecto maven clickamos primero sobre clean y luego sobre install.
        
   ![maven.png](src/main/resources/static/img/maven.png)
+  
   Todo este proceso se repite para el servicio interno y ya tendriamos nuestros .jar.
 - Por útlimo, solo queda ejecutar el comando java -jar "nombreJar.jar" con el jar de la app y del servicio interno y ya estaría la aplicación y el servicio desplegados y listos para peticiones.
 
