@@ -117,6 +117,7 @@ public class UsuarioController {
     @RequestMapping ("/ClasesColectivas/{name}")
     public String getGroupLessons(Model model,@PathVariable String name) {
         List<ClasesColectivas> lista = clasesColectivasDAO.findAll();
+        Usuario user = usuarioDAO.findByNombre(name);
         List<String> colectivas = new ArrayList<>();
 
         for(ClasesColectivas clase : lista) {
@@ -124,6 +125,10 @@ public class UsuarioController {
         }
         model.addAttribute("lista", lista);
         model.addAttribute("name",name);
+        //model.addAttribute("entrenador", request.isUserInRole("ROLE_ENTRENADOR"));)
+        if(user.isEntrenador()){
+            model.addAttribute("entrenador", user.getNombre());
+        }
         model.addAttribute("colectiva",colectivas);
         model.addAttribute("user",true);
         return "clases_colectivas";

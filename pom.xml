@@ -11,7 +11,7 @@
         <version>2.6.3</version>
         <relativePath/>
     </parent>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>bajagym</name>
 
@@ -259,4 +259,13 @@
             </properties>
         </profile>
     </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.5</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
