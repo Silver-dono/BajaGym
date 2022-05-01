@@ -37,7 +37,7 @@ public class AppConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/bajagyminternal");
+        dataSource.setUrl("jdbc:mysql://bajagymdb2:3306/bajagyminternal");
         dataSource.setUsername("bajagymadmin");
         dataSource.setPassword("4dm1nch4v3z");
         return dataSource;

@@ -28,7 +28,6 @@ public class AppConfiguration {
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.bajagym.model");
-
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(true);
         em.setJpaVendorAdapter(vendorAdapter);
@@ -41,7 +40,7 @@ public class AppConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/bajagym");
+        dataSource.setUrl("jdbc:mysql://bajagym:3306/bajagym");
         dataSource.setUsername("bajagymadmin");
         dataSource.setPassword("4dm1nch4v3z");
         return dataSource;

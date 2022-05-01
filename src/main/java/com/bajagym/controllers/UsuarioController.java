@@ -11,6 +11,7 @@ import com.bajagym.model.Rutina;
 import com.bajagym.repositories.ClasesColectivasDAO;
 import com.bajagym.repositories.RutinaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/usuarios")
 @Controller
 public class UsuarioController {
+
+    @Value("${internalService.baseUri}")
+    private String intServiceURI;
 
     private static final String URL_INTERNAL_SERVICE = "http://localhost:8181/internal";
 
@@ -81,7 +85,7 @@ public class UsuarioController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        restTemplate.postForObject(URL_INTERNAL_SERVICE + "/service/usuario", postUser, String.class);
+        restTemplate.postForObject(intServiceURI + "/service/usuario", postUser, String.class);
 
 
         return "registered_succesfull";
@@ -174,7 +178,7 @@ public class UsuarioController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        restTemplate.getForObject(URL_INTERNAL_SERVICE + "/service/mail/usuario/"+user.getNombre(),String.class);
+        restTemplate.getForObject(intServiceURI + "/service/mail/usuario/"+user.getNombre(),String.class);
         model.addAttribute("name", user.getNombre());
         return "rutina_cambiada";
     }
@@ -197,7 +201,7 @@ public class UsuarioController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        restTemplate.getForObject(URL_INTERNAL_SERVICE + "/service/mail/entrenadores/"+name,String.class);
+        restTemplate.getForObject(intServiceURI + "/service/mail/entrenadores/"+name,String.class);
 
         return "cambio_rutina_solicitada";
     }
