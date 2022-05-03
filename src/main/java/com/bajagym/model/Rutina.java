@@ -66,7 +66,7 @@ public class Rutina implements Serializable {
         return series;
     }
 
-    public boolean getEjemplo(){
+    public boolean isEjemplo() {
         return ejemplo;
     }
 

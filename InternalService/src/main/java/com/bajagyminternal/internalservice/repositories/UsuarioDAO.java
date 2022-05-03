@@ -15,7 +15,7 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
     @Cacheable()
     List<Usuario> findAllByEntrenadorTrue();
 
-    @CacheEvict(allEntries = true, condition = "#user.entrenador = true")
+    @CacheEvict(allEntries = true, condition = "#user.entrenador == true")
     Usuario save(Usuario user);
 
     Optional<Usuario> findByNombre(String nombre);

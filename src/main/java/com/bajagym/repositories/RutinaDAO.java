@@ -25,7 +25,7 @@ public interface RutinaDAO extends JpaRepository<Rutina, Long> {
     @Cacheable
     List<Rutina> findAllByEjemploTrue();
 
-    @CacheEvict(allEntries = true, condition = "#r.ejemplo = true")
+    @CacheEvict(allEntries = true, condition = "#r.ejemplo == true")
     Rutina save(Rutina r);
 
     Optional<Rutina> findById(Long id);
