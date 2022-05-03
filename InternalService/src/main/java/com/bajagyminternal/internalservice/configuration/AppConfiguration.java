@@ -1,5 +1,8 @@
 package com.bajagyminternal.internalservice.configuration;
 
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +16,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableCaching
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"com.bajagyminternal.internalservice"})
 @EnableJpaRepositories(basePackages = {"com.bajagyminternal.internalservice.repositories"})
@@ -49,5 +53,10 @@ public class AppConfiguration {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 
         return properties;
+    }
+
+    @Bean
+    public CacheManager alternateCacheManager() {
+        return new ConcurrentMapCacheManager("Entrenadores");
     }
 }

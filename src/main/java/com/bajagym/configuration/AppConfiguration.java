@@ -1,6 +1,9 @@
 package com.bajagym.configuration;
 
 
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +19,7 @@ import java.util.Properties;
 
 
 @Configuration
+@EnableCaching
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"com.bajagym"})
 @EnableJpaRepositories(basePackages = {"com.bajagym.repositories"})
@@ -53,4 +57,11 @@ public class AppConfiguration {
 
         return properties;
     }
+
+    @Bean
+    public CacheManager alternateCacheManager() {
+        return new ConcurrentMapCacheManager("ClasesColectivas", "RutinasEj");
+    }
+
+
 }

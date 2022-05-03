@@ -16,10 +16,17 @@ public class CacheController {
     @Autowired
     private CacheManager cacheManager;
 
-    @RequestMapping(value="/cache", method= RequestMethod.GET)
-    public Map<Object, Object> getCacheContent() {
+    @RequestMapping(value="/cache1", method= RequestMethod.GET)
+    public Map<Object, Object> getCache1Content() {
         ConcurrentMapCacheManager cacheMgr = (ConcurrentMapCacheManager) cacheManager;
         ConcurrentMapCache cache = (ConcurrentMapCache) cacheMgr.getCache("RutinasEj");
+        return cache.getNativeCache();
+    }
+
+    @RequestMapping(value="/cache2", method= RequestMethod.GET)
+    public Map<Object, Object> getCache2Content() {
+        ConcurrentMapCacheManager cacheMgr = (ConcurrentMapCacheManager) cacheManager;
+        ConcurrentMapCache cache = (ConcurrentMapCache) cacheMgr.getCache("ClasesColectivas");
         return cache.getNativeCache();
     }
 
