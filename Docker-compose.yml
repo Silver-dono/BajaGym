@@ -24,7 +24,7 @@ services:
       - 5000:8443
     environment:
         - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
-        - SPRING_DATASOURCE_URL=jdbc:mysql://bajagymdb:3306/bajagyminternal
+        - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
     restart: on-failure
     container_name:  bajagym-app
 
