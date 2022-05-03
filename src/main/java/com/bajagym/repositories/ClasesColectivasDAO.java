@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.bajagym.model.ClasesColectivas;
@@ -26,5 +27,9 @@ public interface ClasesColectivasDAO extends JpaRepository<ClasesColectivas, Lon
 
     void deleteByNombreClase(String name);
 
+    @CacheEvict(allEntries = true)
+    void deleteById(Long id);
+
+    @CacheEvict(allEntries = true)
     ClasesColectivas save(ClasesColectivas e);
 }

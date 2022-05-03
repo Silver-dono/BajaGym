@@ -65,7 +65,7 @@ public class AppConfiguration {
 
     @Bean
     public CacheManager alternateCacheManager() {
-        return new ConcurrentMapCacheManager("ClasesColectivas", "RutinasEj");
+        return new ConcurrentMapCacheManager("ClasesColectivas", "RutinasEj", "usuarios");
     }
 
 

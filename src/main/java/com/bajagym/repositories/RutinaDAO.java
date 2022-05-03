@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -21,8 +23,9 @@ public interface RutinaDAO extends JpaRepository<Rutina, Long> {
     List<Rutina> findByNombre(String nombre);
 
     @Cacheable
-    List<Rutina> getAllByEjemplo(boolean ejemplo);
+    List<Rutina> findAllByEjemploTrue();
 
+    @CacheEvict(allEntries = true, condition = "#r.ejemplo = true")
     Rutina save(Rutina r);
 
     Optional<Rutina> findById(Long id);

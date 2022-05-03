@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("service")
@@ -26,7 +25,8 @@ public class MailService {
     @GetMapping("mail/entrenadores/{name}")
     public ResponseEntity<String> notificaEntrenadores(@PathVariable String name){
         try{
-            List<Usuario> entrenadores = usuarioDAO.findAllByIsEntrenador();
+            List<Usuario> entrenadores = usuarioDAO.findAllByEntrenadorTrue();
+
             for (Usuario entrenador : entrenadores) {
                 SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(entrenador.getCorreo());
