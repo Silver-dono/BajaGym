@@ -1,6 +1,7 @@
 package com.bajagym.configuration;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -25,6 +27,9 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {"com.bajagym.repositories"})
 @PropertySource(value = "classpath:application.properties")
 public class AppConfiguration {
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -44,7 +49,7 @@ public class AppConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://bajagym:3306/bajagym");
+        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
         dataSource.setUsername("bajagymadmin");
         dataSource.setPassword("4dm1nch4v3z");
         return dataSource;
