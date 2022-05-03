@@ -1,6 +1,8 @@
 package com.bajagym.configuration;
 
 
+import com.hazelcast.config.Config;
+import com.hazelcast.config.JoinConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +11,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Collections;
 import java.util.Properties;
 
 
@@ -53,4 +57,5 @@ public class AppConfiguration {
 
         return properties;
     }
+
 }

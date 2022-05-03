@@ -3,47 +3,70 @@ version: '2'
 services:
   bajagym:
     image: mysql:latest
+    networks:
+      default:
+        ipv4_address: 172.19.0.2
     environment:
       - MYSQL_DATABASE=bajagym
       - MYSQL_USER=bajagymadmin      
       - MYSQL_PASSWORD=4dm1nch4v3z      
       - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
     ports:
-      - 3333:3306
-    container_name: bajagym-db
+      - 3306
 
 
   bajagym-app:
     image: bajagym-image
+    networks:
+      default:
+        ipv4_address: 172.19.0.4
     build: .
     depends_on:
       - bajagym
     links:
       - bajagym
     ports:
-      - 5000:8443
+      - 8443:8443
     environment:
         INTERNALSERVICE_BASEURI: http://bajagyminterno-app:8181/internal
     restart: on-failure
-    container_name:  bajagym-app
-
+  bajagym-app2:
+    image: bajagym-image
+    networks:
+      default:
+        ipv4_address: 172.19.0.5
+    build: .
+    depends_on:
+      - bajagym
+    links:
+      - bajagym
+    ports:
+      - 8444:8443
+    environment:
+      INTERNALSERVICE_BASEURI: http://bajagyminterno-app:8181/internal
+    restart: on-failure
 
   bajagymdb2:
     image: mysql:latest
+    networks:
+      default:
+        ipv4_address: 172.19.0.8
     environment:
       - MYSQL_DATABASE=bajagyminternal      
       - MYSQL_USER=bajagymadmin      
       - MYSQL_PASSWORD=4dm1nch4v3z      
       - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
     ports:
-      - 3334:3306
+      - 3306
     links:
       - bajagym
-    container_name: bajagyminteral-db
 
 
   bajagyminterno-app:
     image: bajagyminterno-image
+    networks:
+      default:
+        ipv4_address: 172.19.0.6
     build: 
         context: .
         dockerfile: Dockerfile-internal
@@ -56,7 +79,50 @@ services:
     links:
       - bajagymdb2
     ports:
-      - 5001:8181
+      - 8181
     restart: on-failure
-    container_name:  bajagyminterno-app
+
+  bajagyminterno-app2:
+    image: bajagyminterno-image
+    networks:
+      default:
+        ipv4_address: 172.19.0.3
+    build:
+      context: .
+      dockerfile: Dockerfile-internal
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bajagymdb2:3306/bajagyminternal
+      - SPRING_DATASOURCE_USERNAME=bajagymadmin
+      - SPRING_DATASOURCE_PASSWORD=4dm1nch4v3z
+    depends_on:
+      - bajagymdb2
+    links:
+      - bajagymdb2
+    ports:
+      - 8181
+    restart: on-failure
+
+  haproxy:
+    image: haproxytech/haproxy-alpine:2.4
+    networks:
+      default:
+        ipv4_address: 172.19.0.7
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    depends_on:
+      - bajagym-app
+      - bajagym-app2
+    ports:
+      - 443:443
+      - 8404:8404
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/16
+          gateway: 172.19.0.1
+
+
   

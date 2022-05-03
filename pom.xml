@@ -225,8 +225,25 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mustache</artifactId>
         </dependency>
-    </dependencies>
 
+
+        <!-- Session Spring -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-bom</artifactId>
+            <version>2020.0.3</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-hazelcast</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+        </dependency>
+
+    </dependencies>
     <profiles>
         <profile>
             <id>dev-test</id>
