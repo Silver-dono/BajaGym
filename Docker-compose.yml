@@ -5,14 +5,32 @@ services:
     image: mysql:latest
     networks:
       default:
-        ipv4_address: 172.19.0.2
+        ipv4_address: 172.19.0.9
     environment:
       - MYSQL_DATABASE=bajagym
       - MYSQL_USER=bajagymadmin      
-      - MYSQL_PASSWORD=4dm1nch4v3z      
+      - MYSQL_PASSWORD=4dm1nch4v3z
       - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
     ports:
       - 3306
+    command:
+      --server-id=1
+      --log-bin=mysql-bin
+      --binlog-do-db=bajagym
+      --innodb_flush_log_at_trx_commit=2
+      --sync_binlog=1
+  bajagym-slave:
+    image: mysql:latest
+    networks:
+      default:
+        ipv4_address: 172.19.0.10
+    environment:
+      - MYSQL_DATABASE=bajagym
+      - MYSQL_USER=bajagymadmin
+      - MYSQL_PASSWORD=4dm1nch4v3z
+      - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
+    command:
+      --server-id=428
 
 
   bajagym-app:
@@ -23,8 +41,10 @@ services:
     build: .
     depends_on:
       - bajagym
+      - bajagym-slave
     links:
       - bajagym
+      - bajagym-slave
     ports:
       - 8443:8443
     environment:
@@ -38,8 +58,10 @@ services:
     build: .
     depends_on:
       - bajagym
+      - bajagym-slave
     links:
       - bajagym
+      - bajagym-slave
     ports:
       - 8444:8443
     environment:
@@ -60,6 +82,7 @@ services:
       - 3306
     links:
       - bajagym
+      - bajagym-slave
 
 
   bajagyminterno-app:
