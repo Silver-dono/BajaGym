@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.HashMap;
 
 @SpringBootApplication
-@EnableHazelcastHttpSession
 public class AppInitializer {
 
     public static void main(String[] args) {
@@ -21,14 +20,7 @@ public class AppInitializer {
         }});
         application.run();
     }
-    @Bean
-    public Config configHazelcast(){
-        Config config=new Config();
-        JoinConfig joinConfig = config.getNetworkConfig().getJoin();
-        joinConfig.getMulticastConfig().setEnabled(false);
-        joinConfig.getTcpIpConfig().setEnabled(true).setMembers(Collections.singletonList("127.0.0.1"));
-        return config;
-    }
+
 
 
 }

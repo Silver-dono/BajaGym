@@ -11,6 +11,9 @@ import com.bajagym.repositories.RutinaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +60,9 @@ public class UsuarioController {
     @RequestMapping ("/loging")
     public String login(HttpSession session, HttpServletRequest request,Model model) {
         String name = request.getUserPrincipal().getName();
+        if(name==null){
+            name= (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }
         Usuario user = usuarioDAO.findByNombre(name);
         model.addAttribute("name",user.getNombre());
         model.addAttribute("entrenador",request.isUserInRole("ROLE_ENTRENADOR"));
