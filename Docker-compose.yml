@@ -115,8 +115,6 @@ services:
       dockerfile: Dockerfile-internal
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://bajagymdb2:3306/bajagyminternal
-      - SPRING_DATASOURCE_USERNAME=bajagymadmin
-      - SPRING_DATASOURCE_PASSWORD=4dm1nch4v3z
     depends_on:
       - bajagymdb2
     links:
