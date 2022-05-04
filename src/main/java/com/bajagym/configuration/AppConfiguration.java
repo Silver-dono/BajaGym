@@ -24,6 +24,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = {"com.bajagym"})
 @EnableJpaRepositories(basePackages = {"com.bajagym.repositories"})
 @PropertySource(value = "classpath:application.properties")
+@EnableHazelcastHttpSession
 public class AppConfiguration {
 
     @Bean
@@ -56,6 +57,13 @@ public class AppConfiguration {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 
         return properties;
+    }
+    @Bean
+    public Config configHazelcast(){
+        Config config=new Config();
+        JoinConfig joinConfig = config.getNetworkConfig().getJoin();
+        joinConfig.getMulticastConfig().setEnabled(true);
+        return config;
     }
 
 }

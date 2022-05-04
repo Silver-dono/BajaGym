@@ -136,7 +136,7 @@ services:
       - bajagym-app
       - bajagym-app2
     ports:
-      - 443:443
+      - 444:443
       - 8404:8404
 networks:
   default:
