@@ -123,19 +123,6 @@ services:
       - 8181
     restart: on-failure
 
-  haproxy:
-    image: haproxytech/haproxy-alpine:2.4
-    networks:
-      default:
-        ipv4_address: 172.19.0.7
-    volumes:
-      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-    depends_on:
-      - bajagym-app
-      - bajagym-app2
-    ports:
-      - 444:443
-      - 8404:8404
 networks:
   default:
     driver: bridge
