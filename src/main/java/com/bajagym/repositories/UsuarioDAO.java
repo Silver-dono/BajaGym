@@ -32,7 +32,6 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
 
     void deleteByIdUsuario(Long id);
 
-    @CachePut
     Usuario save(Usuario user);
 
     @Modifying
