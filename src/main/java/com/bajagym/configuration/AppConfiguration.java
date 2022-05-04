@@ -1,31 +1,35 @@
 package com.bajagym.configuration;
 
 
-import com.hazelcast.config.Config;
-import com.hazelcast.config.JoinConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.Collections;
 import java.util.Properties;
 
 
 @Configuration
+@EnableCaching
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"com.bajagym"})
 @EnableJpaRepositories(basePackages = {"com.bajagym.repositories"})
 @PropertySource(value = "classpath:application.properties")
-@EnableHazelcastHttpSession
 public class AppConfiguration {
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -45,7 +49,7 @@ public class AppConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://bajagym:3306/bajagym");
+        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
         dataSource.setUsername("bajagymadmin");
         dataSource.setPassword("4dm1nch4v3z");
         return dataSource;
@@ -58,12 +62,11 @@ public class AppConfiguration {
 
         return properties;
     }
+
     @Bean
-    public Config configHazelcast(){
-        Config config=new Config();
-        JoinConfig joinConfig = config.getNetworkConfig().getJoin();
-        joinConfig.getMulticastConfig().setEnabled(true);
-        return config;
+    public CacheManager alternateCacheManager() {
+        return new ConcurrentMapCacheManager("ClasesColectivas", "RutinasEj", "usuarios");
     }
+
 
 }

@@ -1,8 +1,6 @@
 package com.bajagym.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.bajagym.repositories.UsuarioDAO;
 import org.apache.commons.collections4.CollectionUtils;
@@ -30,7 +28,7 @@ public class RutinaController {
 
     @GetMapping("/ejemplos")
     public String ejemplo(Model model) {
-        List<Rutina> lista = rutinaDAO.getAllByEjemplo(true);
+        List<Rutina> lista = rutinaDAO.findAllByEjemploTrue();
         List<String> rutinas = new ArrayList<>();
         for(Rutina rut: lista){
             rutinas.add(rut.toString());
@@ -58,7 +56,7 @@ public class RutinaController {
 
     @GetMapping("/ejemplo")
     public List<Rutina> getRutinasEjemplo() {
-        List<Rutina> rutinas = rutinaDAO.getAllByEjemplo(true);
+        List<Rutina> rutinas = rutinaDAO.findAllByEjemploTrue();
         if (CollectionUtils.isNotEmpty(rutinas)) {
             return rutinas;
         } else {

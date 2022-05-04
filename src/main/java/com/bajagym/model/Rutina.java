@@ -5,7 +5,6 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Entity
@@ -27,7 +26,7 @@ public class Rutina implements Serializable {
     private boolean ejemplo;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rutina_id", targetEntity = Serie.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "rutina_id", targetEntity = Serie.class)
     private List<Serie> series;
 
     public Rutina(){}
@@ -66,7 +65,7 @@ public class Rutina implements Serializable {
         return series;
     }
 
-    public boolean getEjemplo(){
+    public boolean isEjemplo() {
         return ejemplo;
     }
 
@@ -80,6 +79,6 @@ public class Rutina implements Serializable {
 @Override
 public String toString(){
 
-    return "Nombre: "+getNombre()+", Series" + getSeries().toString();
+    return "Nombre: "+ this.nombre +", Series" + this.series.toString();
 }
 }
