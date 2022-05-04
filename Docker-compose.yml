@@ -28,7 +28,8 @@ services:
     ports:
       - 8443:8443
     environment:
-        INTERNALSERVICE_BASEURI: http://bajagyminterno-app:8181/internal
+        - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
+        - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
     restart: on-failure
   bajagym-app2:
     image: bajagym-image
@@ -71,9 +72,7 @@ services:
         context: .
         dockerfile: Dockerfile-internal
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://bajagymdb2:3306/bajagyminternal
-      - SPRING_DATASOURCE_USERNAME=bajagymadmin
-      - SPRING_DATASOURCE_PASSWORD=4dm1nch4v3z
+       - SPRING_DATASOURCE_URL=jdbc:mysql://bajagymdb2:3306/bajagyminternal
     depends_on:
       - bajagymdb2
     links:

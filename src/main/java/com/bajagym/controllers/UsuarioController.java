@@ -2,9 +2,7 @@ package com.bajagym.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.bajagym.model.ClasesColectivas;
 import com.bajagym.model.Rutina;
@@ -34,14 +32,10 @@ public class UsuarioController {
     @Value("${internalService.baseUri}")
     private String intServiceURI;
 
-    private static final String URL_INTERNAL_SERVICE = "http://localhost:8181/internal";
-
     @Autowired
     private UsuarioDAO usuarioDAO;
-
     @Autowired
     private ClasesColectivasDAO clasesColectivasDAO;
-
     @Autowired
     private RutinaDAO rutinaDAO;
 
