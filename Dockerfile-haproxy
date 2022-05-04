@@ -1,0 +1,6 @@
+# Selecciona la imagen base
+FROM haproxytech/haproxy-alpine:2.4
+# Copia de la aplicación compilada
+COPY haproxy.cfg /usr/local/etc/haproxy
+
+
