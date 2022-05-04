@@ -60,9 +60,6 @@ public class UsuarioController {
     @RequestMapping ("/loging")
     public String login(HttpSession session, HttpServletRequest request,Model model) {
         String name = request.getUserPrincipal().getName();
-        if(name==null){
-            name= (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }
         Usuario user = usuarioDAO.findByNombre(name);
         model.addAttribute("name",user.getNombre());
         model.addAttribute("entrenador",request.isUserInRole("ROLE_ENTRENADOR"));
