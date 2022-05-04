@@ -48,7 +48,7 @@ services:
     ports:
       - 8443:8443
     environment:
-        - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
+        - INTERNALSERVICE_BASEURI=http://localhost:81/internal
         - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
     restart: on-failure
   bajagym-app2:
@@ -66,7 +66,7 @@ services:
     ports:
       - 8444:8443
     environment:
-      - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
+      - INTERNALSERVICE_BASEURI=http://localhost:81/internal
       - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
     restart: on-failure
 
