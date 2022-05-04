@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.bajagym.model.Rutina;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,6 +38,7 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
 
     @Modifying
     @Transactional
+    @CacheEvict(key = "#name")
     @Query("UPDATE Usuario u set u.rutina = :rutina where u.nombre = :name")
     void setUsuarioRutinaByNombre(@Param("rutina") Rutina rutina, @Param("name") String name);
 }
