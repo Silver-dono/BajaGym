@@ -47,8 +47,7 @@ services:
     links:
       - bajagym
       - bajagym-slave
-    ports:
-      - 8443:8443
+
     environment:
         - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
         - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
@@ -66,8 +65,7 @@ services:
     links:
       - bajagym
       - bajagym-slave
-    ports:
-      - 8444:8443
+
     environment:
       - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
       - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
@@ -105,8 +103,6 @@ services:
       - bajagymdb2
     links:
       - bajagymdb2
-    ports:
-      - 8181
     restart: on-failure
 
 
