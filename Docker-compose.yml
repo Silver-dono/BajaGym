@@ -29,8 +29,11 @@ services:
       - MYSQL_USER=bajagymadmin
       - MYSQL_PASSWORD=4dm1nch4v3z
       - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym-slave
     command:
       --server-id=428
+    ports:
+      - 3306
 
 
   bajagym-app:
@@ -105,23 +108,6 @@ services:
       - 8181
     restart: on-failure
 
-  bajagyminterno-app2:
-    image: bajagyminterno-image
-    networks:
-      default:
-        ipv4_address: 172.19.0.3
-    build:
-      context: .
-      dockerfile: Dockerfile-internal
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://bajagymdb2:3306/bajagyminternal
-    depends_on:
-      - bajagymdb2
-    links:
-      - bajagymdb2
-    ports:
-      - 8181
-    restart: on-failure
 
 networks:
   default:
