@@ -29,7 +29,6 @@ services:
       - MYSQL_USER=bajagymadmin
       - MYSQL_PASSWORD=4dm1nch4v3z
       - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
-      - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym-slave
     command:
       --server-id=428
     ports:
@@ -53,6 +52,7 @@ services:
     environment:
         - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
         - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
+        - SPRING_DATASOURCE_READ_URL=jdbc:mysql://bajagym-slave:3306/bajagym
     restart: on-failure
   bajagym-app2:
     image: bajagym-image
@@ -71,6 +71,7 @@ services:
     environment:
       - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
       - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
+      - SPRING_DATASOURCE_READ_URL=jdbc:mysql://bajagym-slave:3306/bajagym
     restart: on-failure
 
   bajagymdb2:
