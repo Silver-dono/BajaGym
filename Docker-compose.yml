@@ -1,0 +1,123 @@
+version: '2'
+
+services:
+  bajagym:
+    image: mysql:latest
+    networks:
+      default:
+        ipv4_address: 172.19.0.9
+    environment:
+      - MYSQL_DATABASE=bajagym
+      - MYSQL_USER=bajagymadmin      
+      - MYSQL_PASSWORD=4dm1nch4v3z
+      - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
+    ports:
+      - 3306
+    command:
+      --server-id=1
+      --log-bin=mysql-bin
+      --binlog-do-db=bajagym
+      --innodb_flush_log_at_trx_commit=2
+      --sync_binlog=1
+  bajagym-slave:
+    image: mysql:latest
+    networks:
+      default:
+        ipv4_address: 172.19.0.10
+    environment:
+      - MYSQL_DATABASE=bajagym
+      - MYSQL_USER=bajagymadmin
+      - MYSQL_PASSWORD=4dm1nch4v3z
+      - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
+    command:
+      --server-id=428
+    ports:
+      - 3306
+
+
+  bajagym-app:
+    image: bajagym-image
+    networks:
+      default:
+        ipv4_address: 172.19.0.4
+    build: .
+    depends_on:
+      - bajagym
+      - bajagym-slave
+    links:
+      - bajagym
+      - bajagym-slave
+    ports:
+      - 8443:8443
+    environment:
+        - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
+        - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
+        - SPRING_DATASOURCE_READ_URL=jdbc:mysql://bajagym-slave:3306/bajagym
+    restart: on-failure
+  bajagym-app2:
+    image: bajagym-image
+    networks:
+      default:
+        ipv4_address: 172.19.0.5
+    build: .
+    depends_on:
+      - bajagym
+      - bajagym-slave
+    links:
+      - bajagym
+      - bajagym-slave
+    ports:
+      - 8444:8443
+    environment:
+      - INTERNALSERVICE_BASEURI=http://bajagyminterno-app:8181/internal
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bajagym:3306/bajagym
+      - SPRING_DATASOURCE_READ_URL=jdbc:mysql://bajagym-slave:3306/bajagym
+    restart: on-failure
+
+  bajagymdb2:
+    image: mysql:latest
+    networks:
+      default:
+        ipv4_address: 172.19.0.8
+    environment:
+      - MYSQL_DATABASE=bajagyminternal      
+      - MYSQL_USER=bajagymadmin      
+      - MYSQL_PASSWORD=4dm1nch4v3z      
+      - MYSQL_ROOT_PASSWORD=4dm1nch4v3z
+    ports:
+      - 3306
+    links:
+      - bajagym
+      - bajagym-slave
+
+
+  bajagyminterno-app:
+    image: bajagyminterno-image
+    networks:
+      default:
+        ipv4_address: 172.19.0.6
+    build: 
+        context: .
+        dockerfile: Dockerfile-internal
+    environment:
+       - SPRING_DATASOURCE_URL=jdbc:mysql://bajagymdb2:3306/bajagyminternal
+    depends_on:
+      - bajagymdb2
+    links:
+      - bajagymdb2
+    ports:
+      - 8181
+    restart: on-failure
+
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/16
+          gateway: 172.19.0.1
+
+
+  

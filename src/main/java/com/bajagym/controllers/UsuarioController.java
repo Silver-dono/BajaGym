@@ -2,15 +2,16 @@ package com.bajagym.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.bajagym.model.ClasesColectivas;
 import com.bajagym.model.Rutina;
 import com.bajagym.repositories.ClasesColectivasDAO;
 import com.bajagym.repositories.RutinaDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bajagym.model.Usuario;
 import com.bajagym.repositories.UsuarioDAO;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,14 +32,15 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class UsuarioController {
 
-    private static final String URL_INTERNAL_SERVICE = "http://localhost:8181/internal";
+    private Logger logger = LogManager.getLogger(UsuarioController.class);
+
+    @Value("${internalService.baseUri}")
+    private String intServiceURI;
 
     @Autowired
     private UsuarioDAO usuarioDAO;
-
     @Autowired
     private ClasesColectivasDAO clasesColectivasDAO;
-
     @Autowired
     private RutinaDAO rutinaDAO;
 
@@ -75,14 +78,18 @@ public class UsuarioController {
         }else{
             roles.add("ROLE_USUARIO");
         }
-        Usuario aux = usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia),roles, checkboxvalue));
 
-        PostUser postUser = new PostUser(aux.getNombre(),correo,aux.isEntrenador());
+        PostUser postUser = new PostUser(userName,correo,checkboxvalue);
 
         RestTemplate restTemplate = new RestTemplate();
+        try{
+            restTemplate.postForObject(intServiceURI + "/service/usuario", postUser, String.class);
+        } catch (RestClientException ex) {
+            logger.error("Error connection refuse internal service");
+            return "error_servicio_interno";
+        }
 
-        restTemplate.postForObject(URL_INTERNAL_SERVICE + "/service/usuario", postUser, String.class);
-
+        usuarioDAO.save(new Usuario(userName,edad,new BCryptPasswordEncoder().encode(contrasenia),roles, checkboxvalue));
 
         return "registered_succesfull";
     }
@@ -173,8 +180,11 @@ public class UsuarioController {
         usuarioDAO.setUsuarioRutinaByNombre(rutina, user.getNombre());
 
         RestTemplate restTemplate = new RestTemplate();
-
-        restTemplate.getForObject(URL_INTERNAL_SERVICE + "/service/mail/usuario/"+user.getNombre(),String.class);
+        try {
+            restTemplate.getForObject(intServiceURI + "/service/mail/usuario/" + user.getNombre(), String.class);
+        } catch (RestClientException ex) {
+            logger.error("Error connection refuse internal service");
+        }
         model.addAttribute("name", user.getNombre());
         return "rutina_cambiada";
     }
@@ -197,7 +207,7 @@ public class UsuarioController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        restTemplate.getForObject(URL_INTERNAL_SERVICE + "/service/mail/entrenadores/"+name,String.class);
+        restTemplate.getForObject(intServiceURI + "/service/mail/entrenadores/"+name,String.class);
 
         return "cambio_rutina_solicitada";
     }
